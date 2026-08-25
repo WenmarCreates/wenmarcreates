@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OAuth Authorization Callback</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #120c09;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 1rem;
+      max-width: 400px;
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-left-color: #b45309;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1.5rem;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="spinner"></div>
+    <h3>Authorizing Social Account...</h3>
+    <p style="font-size: 0.85rem; color: #a1a1aa;">Exchanging OAuth authorization code with Meta Graph API.</p>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    const error = urlParams.get('error');
+
+    if (window.opener) {
+      window.opener.postMessage({
+        type: 'OAUTH_CALLBACK',
+        code: code,
+        error: error
+      }, '*');
+      setTimeout(() => {
+        window.close();
+      }, 1500);
+    }
+  </script>
+</body>
+</html>
