@@ -84,8 +84,28 @@ export const HomeView = () => {
   const [targetLocation, setTargetLocation] = useState("Miami, FL");
   const [geminiApiKey, setGeminiApiKey] = useState("AQ.Ab8RN6JuZk7-bR_-uppk3rh6_kbQGHm9oB86eBj4bFlKB2kDgw");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState("⚡ Processing website data, please wait...");
   const [analysisResult, setAnalysisResult] = useState(null);
   const [showAnalysisModal, setShowAnalysisModal] = useState(false);
+
+  useEffect(() => {
+    let timer;
+    if (isAnalyzing) {
+      const messages = [
+        "⚡ Processing website data, please wait...",
+        "🔍 Fetching live webpage content & metadata...",
+        "🤖 Running AI lead matching algorithms...",
+        "🎯 Don't blink, we're almost there!"
+      ];
+      let idx = 0;
+      setLoadingMessage(messages[0]);
+      timer = setInterval(() => {
+        idx = (idx + 1) % messages.length;
+        setLoadingMessage(messages[idx]);
+      }, 700);
+    }
+    return () => clearInterval(timer);
+  }, [isAnalyzing]);
 
   // Helper to extract and format domain name into real business name
   const extractDomainName = (rawUrl) => {
@@ -665,7 +685,31 @@ export const HomeView = () => {
         }
       }
     } catch (n8nErr) {
-      console.warn("n8n Webhook timeout or test mode waiting, proceeding to live fetch:", n8nErr);
+      console.warn("n8n Webhook timeout or test mode waiting, proceeding to Render backend / live fetch:", n8nErr);
+    }
+
+    // 2. Call Live Render Production Backend Scraper
+    try {
+      const renderRes = await fetchWithTimeout(
+        "https://aaystyle.onrender.com/api/scrape-website",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url: cleanUrl, location: targetLocation })
+        },
+        5000
+      );
+
+      if (renderRes.ok) {
+        const renderData = await renderRes.json();
+        if (renderData && renderData.status === "success") {
+          setAnalysisResult(renderData);
+          addToast("Live Render Backend Scraper Active!", "Scraped live website content via Render backend.", "success");
+          return;
+        }
+      }
+    } catch (renderErr) {
+      console.warn("Render backend scraper timeout/error:", renderErr);
     }
 
     let liveText = "";
@@ -1021,38 +1065,29 @@ Return ONLY valid raw JSON:
             </button>
           </form>
 
-          {/* Quick Example URL Presets */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", flexWrap: "wrap", marginTop: "1.25rem" }}>
-            <span style={{ fontSize: "0.75rem", fontWeight: "700", color: "var(--text-subtle)", textTransform: "uppercase" }}>
-              Try Example URLs:
-            </span>
-            {[
-              { label: "myrealtoros.ai (Realtor AI OS)", url: "myrealtoros.ai", loc: "Miami, FL" },
-              { label: "miamipestcontrol.com (Pest Control)", url: "miamipestcontrol.com", loc: "Miami, FL" },
-              { label: "austindental.com (Dental Clinic)", url: "austindental.com", loc: "Austin, TX" },
-              { label: "dallasroofing.com (Roofing & Build)", url: "dallasroofing.com", loc: "Dallas, TX" }
-            ].map((p, idx) => (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => {
-                  setWebsiteUrl(p.url);
-                  setTargetLocation(p.loc);
-                }}
-                style={{
-                  fontSize: "0.75rem",
-                  padding: "0.25rem 0.6rem",
-                  borderRadius: "20px",
-                  background: "var(--bg-tertiary)",
-                  border: "1px solid var(--border-color)",
-                  color: "var(--text-muted)",
-                  fontWeight: "600"
-                }}
-              >
-                {p.label}
-              </button>
-            ))}
-          </div>
+          {/* Active Extraction Status Note */}
+          {isAnalyzing && (
+            <div
+              className="animate-fade-in"
+              style={{
+                marginTop: "1.25rem",
+                padding: "0.75rem 1.35rem",
+                background: "#573325",
+                color: "#FEFADF",
+                borderRadius: "30px",
+                border: "1px solid rgba(211, 163, 115, 0.45)",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.65rem",
+                fontSize: "0.95rem",
+                fontWeight: "700",
+                boxShadow: "0 6px 20px rgba(87, 51, 37, 0.35)"
+              }}
+            >
+              <RefreshCw size={18} className="animate-spin" color="#D3A373" />
+              <span>{loadingMessage}</span>
+            </div>
+          )}
 
         </div>
 
@@ -1074,7 +1109,11 @@ Return ONLY valid raw JSON:
                 <div style={{ fontSize: "0.75rem", fontWeight: "700", color: "#D3A373", textTransform: "uppercase", letterSpacing: "0.05em" }}>
                   AI Detected Business Type
                 </div>
-                {analysisResult.isN8nLive ? (
+                {analysisResult.isRenderBackend ? (
+                  <span className="badge" style={{ fontSize: "0.68rem", background: "#D3A373", color: "#392119", fontWeight: "800" }}>
+                    🚀 Live Render Production Backend Active
+                  </span>
+                ) : analysisResult.isN8nLive ? (
                   <span className="badge" style={{ fontSize: "0.68rem", background: "#D3A373", color: "#392119", fontWeight: "800" }}>
                     ⚡ Live n8n AI Webhook Active
                   </span>

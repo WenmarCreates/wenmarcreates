@@ -3,11 +3,21 @@ import cors from 'cors';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+
+// Serve static frontend files from dist/ directory
+const distPath = path.join(__dirname, '../dist');
+app.use(express.static(distPath));
 
 // Health Check Endpoint
 app.get('/health', (req, res) => {
@@ -107,6 +117,26 @@ app.post('/api/scrape-website', async (req, res) => {
     console.error("Backend Scraping Error:", error.message);
     res.status(500).json({ error: "Failed to scrape website", message: error.message });
   }
+});
+
+// SPA Fallback Route - Serves React Frontend
+app.get('*', (req, res) => {
+  res.sendFile(path.join(distPath, 'index.html'), (err) => {
+    if (err) {
+      res.send(`
+        <div style="font-family: system-ui, sans-serif; background: #0f172a; color: #f8fafc; min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;">
+          <div style="background: #1e293b; padding: 2.5rem; border-radius: 1rem; border: 1px solid #334155; max-width: 500px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+            <h1 style="color: #38bdf8; margin-top: 0;">🚀 AayStyle AI Scraper Engine</h1>
+            <p style="color: #94a3b8; font-size: 1.1rem;">Production Web Scraping & B2B Lead Intelligence API is Live!</p>
+            <div style="background: #0f172a; padding: 0.75rem; border-radius: 0.5rem; font-family: monospace; color: #4ade80; margin: 1.5rem 0;">
+              POST /api/scrape-website
+            </div>
+            <p style="font-size: 0.85rem; color: #64748b;">Status: <strong>Online & Operational</strong></p>
+          </div>
+        </div>
+      `);
+    }
+  });
 });
 
 app.listen(PORT, () => {
