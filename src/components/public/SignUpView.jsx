@@ -31,9 +31,9 @@ export const SignUpView = () => {
         position: "fixed", 
         inset: 0, 
         zIndex: 2000, 
-        background: "rgba(18, 12, 9, 0.75)", 
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
+        background: "rgba(18, 12, 9, 0.52)", 
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
         display: "flex", 
         alignItems: "center", 
         justifyContent: "center", 
@@ -104,7 +104,7 @@ export const SignUpView = () => {
             <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem" }}>
               <img 
                 src={logoImg} 
-                alt="AayStyle Logo" 
+                alt="Wenmar Creates Logo" 
                 style={{ 
                   height: "56px", 
                   width: "auto", 
@@ -119,7 +119,7 @@ export const SignUpView = () => {
             <div style={{ textAlign: "center", margin: "1rem 0 1.5rem" }}>
               <img 
                 src={heroBadgeImg} 
-                alt="AayStyle Hero Feature" 
+                alt="Wenmar Creates Feature" 
                 style={{ 
                   maxHeight: "125px", 
                   maxWidth: "100%", 

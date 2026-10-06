@@ -118,7 +118,7 @@ export const Sidebar = () => {
           >
             <img 
               src={logoImg} 
-              alt="AayStyle Logo" 
+              alt="Wenmar Creates Logo" 
               style={{ 
                 height: "38px", 
                 width: "auto", 
@@ -130,7 +130,7 @@ export const Sidebar = () => {
         ) : (
           <img 
             src={logoImg} 
-            alt="AayStyle Logo" 
+            alt="Wenmar Creates Logo" 
             style={{ 
               height: "32px", 
               width: "auto", 

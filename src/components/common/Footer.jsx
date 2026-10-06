@@ -16,7 +16,7 @@ export const Footer = () => {
             <div style={{ display: "flex", alignItems: "center", marginBottom: "1.2rem" }}>
               <img 
                 src={logoImg} 
-                alt="AayStyle Logo" 
+                alt="Wenmar Creates Logo" 
                 style={{ 
                   height: "44px", 
                   width: "auto", 
@@ -50,15 +50,27 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Col 3 - Platform */}
+          {/* Col 3 - Navigation */}
           <div>
-            <h4 style={{ fontSize: "0.95rem", fontWeight: "700", marginBottom: "1.2rem", color: "var(--text-main)" }}>Platform</h4>
+            <h4 style={{ fontSize: "0.95rem", fontWeight: "700", marginBottom: "1.2rem", color: "var(--text-main)" }}>Navigation</h4>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.65rem", fontSize: "0.875rem", color: "var(--text-muted)" }}>
-              <li style={{ cursor: "pointer" }} onClick={() => setCurrentView("home")}>Home</li>
-              <li style={{ cursor: "pointer" }} onClick={() => setCurrentView("about")}>About Us</li>
-              <li style={{ cursor: "pointer" }} onClick={() => setCurrentView("pricing")}>Pricing & Plans</li>
-              <li style={{ cursor: "pointer" }} onClick={() => setCurrentView("contact")}>Contact & Support</li>
-              <li style={{ cursor: "pointer" }} onClick={() => setCurrentView("dashboard")}>Live App Dashboard</li>
+              <li style={{ cursor: "pointer" }} onClick={() => { setCurrentView("home"); window.scrollTo({ top: 0, behavior: "smooth" }); }}>Home</li>
+              <li style={{ cursor: "pointer" }} onClick={() => {
+                setCurrentView("home");
+                setTimeout(() => {
+                  const el = document.getElementById("workstation-section");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                }, 50);
+              }}>Executive Workstation</li>
+              <li style={{ cursor: "pointer" }} onClick={() => {
+                setCurrentView("home");
+                setTimeout(() => {
+                  const el = document.getElementById("portfolio-stage") || document.getElementById("workstation-section");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                }, 50);
+              }}>Creative Portfolio</li>
+              <li style={{ cursor: "pointer" }} onClick={() => { setCurrentView("login"); window.scrollTo({ top: 0, behavior: "smooth" }); }}>Admin Login</li>
+              <li style={{ cursor: "pointer" }} onClick={() => setCurrentView("dashboard")}>Admin Dashboard</li>
             </ul>
           </div>
 

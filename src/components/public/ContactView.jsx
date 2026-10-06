@@ -59,7 +59,7 @@ export const ContactView = () => {
             <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem" }}>
               <img 
                 src={logoImg} 
-                alt="AayStyle Logo" 
+                alt="Wenmar Creates Logo" 
                 style={{ 
                   height: "56px", 
                   width: "auto", 
@@ -74,7 +74,7 @@ export const ContactView = () => {
             <div style={{ textAlign: "center", margin: "1.25rem 0 1.5rem" }}>
               <img 
                 src={heroBadgeImg} 
-                alt="AayStyle Hero Feature" 
+                alt="Wenmar Creates Feature" 
                 style={{ 
                   maxHeight: "130px", 
                   maxWidth: "100%", 

@@ -2,22 +2,18 @@ import React from "react";
 import { AppProvider, useApp } from "./context/AppContext";
 
 // Common Layouts & Overlay Components
-import { Header } from "./components/common/Header";
 import { Footer } from "./components/common/Footer";
 import { Sidebar } from "./components/common/Sidebar";
 import { Topbar } from "./components/common/Topbar";
 import { ToastContainer } from "./components/common/ToastContainer";
 import { SearchModal } from "./components/common/SearchModal";
 import { DemoPreviewModal } from "./components/common/DemoPreviewModal";
+import { EntryGateModal } from "./components/common/EntryGateModal";
+import { CinematicScroll } from "./components/common/CinematicScroll";
 
-// Public Website Views
+// Public Website Views - Single Landing Page & Admin Login
 import { HomeView } from "./components/public/HomeView";
-import { AboutView } from "./components/public/AboutView";
-import { ServicesView } from "./components/public/ServicesView";
-import { PricingView } from "./components/public/PricingView";
-import { ContactView } from "./components/public/ContactView";
 import { LoginView } from "./components/public/LoginView";
-import { SignUpView } from "./components/public/SignUpView";
 
 // Logged-In App Dashboard Views
 import { DashboardHome } from "./components/dashboard/DashboardHome";
@@ -40,28 +36,18 @@ import { AdminDashboardView } from "./components/dashboard/AdminDashboardView";
 const MainContent = () => {
   const { currentView } = useApp();
 
-  const publicViews = ["home", "about", "services", "pricing", "contact", "login", "signup"];
+  const publicViews = ["home", "login"];
   const isPublic = publicViews.includes(currentView);
 
   const renderViewContent = () => {
     switch (currentView) {
-      // Public Views
+      // Single Landing Page & Admin Login
       case "home":
         return <HomeView />;
-      case "about":
-        return <AboutView />;
-      case "services":
-        return <ServicesView />;
-      case "pricing":
-        return <PricingView />;
-      case "contact":
-        return <ContactView />;
       case "login":
         return <LoginView />;
-      case "signup":
-        return <SignUpView />;
 
-      // Dashboard Views
+      // Admin Dashboard Views
       case "dashboard":
         return <DashboardHome />;
       case "business":
@@ -102,17 +88,18 @@ const MainContent = () => {
 
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+      <CinematicScroll />
       <ToastContainer />
       <SearchModal />
       <DemoPreviewModal />
+      <EntryGateModal />
 
       {isPublic ? (
         <>
-          <Header />
-          <main style={{ flex: 1, padding: "2rem 1rem", maxWidth: "1600px", margin: "0 auto", width: "100%" }}>
+          <main style={{ flex: 1, padding: 0, maxWidth: "100%", margin: "0 auto", width: "100%" }}>
             {renderViewContent()}
           </main>
-          <Footer />
+          {currentView !== "home" && <Footer />}
         </>
       ) : (
         <div className="app-layout">

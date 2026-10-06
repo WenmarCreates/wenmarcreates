@@ -40,6 +40,39 @@ export const AppProvider = ({ children }) => {
   const openDemoModal = () => setIsDemoModalOpen(true);
   const closeDemoModal = () => setIsDemoModalOpen(false);
 
+  // Visitor Welcome & Loading Entry Gate State
+  const [isEntryGateOpen, setIsEntryGateOpen] = useState(() => {
+    return !sessionStorage.getItem("wenmar_entry_passed");
+  });
+  const [visitorProfile, setVisitorProfile] = useState(() => {
+    try {
+      const saved = localStorage.getItem("wenmar_visitor_profile");
+      return saved ? JSON.parse(saved) : { name: "", email: "" };
+    } catch {
+      return { name: "", email: "" };
+    }
+  });
+
+  const passEntryGate = ({ name, email }) => {
+    const profile = { name: name || "Visitor", email: email || "" };
+    setVisitorProfile(profile);
+    localStorage.setItem("wenmar_visitor_profile", JSON.stringify(profile));
+    sessionStorage.setItem("wenmar_entry_passed", "true");
+    setIsEntryGateOpen(false);
+    if (name) {
+      addToast(`Welcome to Wenmar Creates, ${name}!`, "Enjoy exploring our services & portfolio.");
+    }
+  };
+
+  const closeEntryGate = () => {
+    sessionStorage.setItem("wenmar_entry_passed", "true");
+    setIsEntryGateOpen(false);
+  };
+
+  const openEntryGate = () => {
+    setIsEntryGateOpen(true);
+  };
+
   // Core App Data States
   const [businessProfile, setBusinessProfile] = useState(INITIAL_BUSINESS_PROFILE);
   const [leads, setLeads] = useState(INITIAL_LEADS_MARKETPLACE);
@@ -471,7 +504,13 @@ export const AppProvider = ({ children }) => {
         billing,
         updateBillingPlan,
         selectedLead,
-        openLeadProfile
+        openLeadProfile,
+        isEntryGateOpen,
+        setIsEntryGateOpen,
+        visitorProfile,
+        passEntryGate,
+        closeEntryGate,
+        openEntryGate
       }}
     >
       {children}

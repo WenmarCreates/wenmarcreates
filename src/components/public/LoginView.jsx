@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useApp } from "../../context/AppContext";
-import { ArrowRight, Lock, Mail, Eye, EyeOff, X, Sparkles, CheckCircle2, ShieldCheck } from "lucide-react";
+import { ArrowRight, X, Lock, Mail, Eye, EyeOff, Sparkles, CheckCircle2, ShieldCheck } from "lucide-react";
 import logoImg from "../../assets/logo.png";
 import heroBadgeImg from "../../assets/hero-badge.png";
 
@@ -18,19 +18,15 @@ export const LoginView = () => {
     setCurrentView("dashboard");
   };
 
-  const handleClose = () => {
-    setCurrentView("home");
-  };
-
   return (
     <div 
       style={{ 
         position: "fixed", 
         inset: 0, 
         zIndex: 2000, 
-        background: "rgba(18, 12, 9, 0.75)", 
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
+        background: "rgba(18, 12, 9, 0.52)", 
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
         display: "flex", 
         alignItems: "center", 
         justifyContent: "center", 
@@ -38,6 +34,42 @@ export const LoginView = () => {
         animation: "fadeIn 0.3s ease-out"
       }}
     >
+      {/* Floating Close Button */}
+      <button
+        onClick={() => setCurrentView("home")}
+        aria-label="Close"
+        style={{
+          position: "absolute",
+          top: "1.5rem",
+          right: "1.5rem",
+          zIndex: 20,
+          width: "40px",
+          height: "40px",
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "rgba(254, 250, 223, 0.18)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          border: "1px solid rgba(211, 163, 115, 0.4)",
+          color: "#FEFADF",
+          cursor: "pointer",
+          boxShadow: "0 4px 16px rgba(0,0,0,0.3)",
+          transition: "all 0.2s ease"
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.backgroundColor = "rgba(211, 163, 115, 0.35)";
+          e.currentTarget.style.transform = "scale(1.08)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = "rgba(254, 250, 223, 0.18)";
+          e.currentTarget.style.transform = "scale(1)";
+        }}
+      >
+        <X size={20} />
+      </button>
+
       {/* Popout Container Card */}
       <div 
         className="glass-card animate-fade-in" 
@@ -50,35 +82,11 @@ export const LoginView = () => {
           borderRadius: "24px",
           overflow: "hidden",
           border: "1px solid rgba(211, 163, 115, 0.4)",
-          boxShadow: "0 25px 60px rgba(0, 0, 0, 0.5)",
-          position: "relative"
+          boxShadow: "0 25px 60px rgba(0, 0, 0, 0.55)",
+          position: "relative",
+          zIndex: 10
         }}
       >
-        {/* Close Modal Button */}
-        <button
-          onClick={handleClose}
-          style={{
-            position: "absolute",
-            top: "1.25rem",
-            right: "1.25rem",
-            zIndex: 10,
-            width: "36px",
-            height: "36px",
-            borderRadius: "50%",
-            background: "var(--bg-tertiary)",
-            border: "1px solid var(--border-color)",
-            color: "var(--text-main)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            transition: "all var(--transition-fast)"
-          }}
-          title="Close Modal"
-        >
-          <X size={20} />
-        </button>
-
         {/* LEFT COLUMN: Brand Denim Showcase (Navbar Logo + Hero Image + Value Prop) */}
         <div 
           style={{ 
@@ -101,7 +109,7 @@ export const LoginView = () => {
             <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem" }}>
               <img 
                 src={logoImg} 
-                alt="AayStyle Logo" 
+                alt="Wenmar Creates Logo" 
                 style={{ 
                   height: "56px", 
                   width: "auto", 
@@ -116,7 +124,7 @@ export const LoginView = () => {
             <div style={{ textAlign: "center", margin: "1rem 0 1.5rem" }}>
               <img 
                 src={heroBadgeImg} 
-                alt="AayStyle Hero Feature" 
+                alt="Wenmar Creates Feature" 
                 style={{ 
                   maxHeight: "130px", 
                   maxWidth: "100%", 
@@ -165,18 +173,18 @@ export const LoginView = () => {
           <div style={{ marginBottom: "2rem" }}>
             <div style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", background: "rgba(211, 163, 115, 0.15)", border: "1px solid rgba(211, 163, 115, 0.3)", padding: "0.3rem 0.8rem", borderRadius: "var(--radius-full)", marginBottom: "0.75rem" }}>
               <Sparkles size={14} color="var(--accent-primary)" />
-              <span style={{ fontSize: "0.78rem", fontWeight: "800", color: "var(--text-main)" }}>Portal Login</span>
+              <span style={{ fontSize: "0.78rem", fontWeight: "800", color: "var(--text-main)" }}>Admin Portal</span>
             </div>
-            <h1 style={{ fontSize: "1.85rem", fontWeight: "800", color: "var(--text-main)" }}>Sign In to AayStyle</h1>
+            <h1 style={{ fontSize: "1.85rem", fontWeight: "800", color: "var(--text-main)" }}>Sign In to Dashboard</h1>
             <p style={{ fontSize: "0.875rem", color: "var(--text-subtle)", marginTop: "0.35rem" }}>
-              Welcome back! Please enter your workspace credentials.
+              Welcome back. Enter your administrator credentials to access the workspace.
             </p>
           </div>
 
           <form onSubmit={handleLogin}>
             
             <div className="form-group" style={{ marginBottom: "1.25rem" }}>
-              <label className="form-label" style={{ fontWeight: "700" }}>Business Email</label>
+              <label className="form-label" style={{ fontWeight: "700" }}>Admin Email</label>
               <div style={{ position: "relative" }}>
                 <input
                   type="email"
@@ -233,20 +241,20 @@ export const LoginView = () => {
               className="btn-denim" 
               style={{ width: "100%", justifyContent: "center", padding: "0.85rem", fontSize: "0.975rem", borderRadius: "var(--radius-md)" }}
             >
-              Sign In to Workspace
+              Sign In to Dashboard
               <ArrowRight size={18} />
             </button>
 
           </form>
 
-          {/* Switch to SignUp Link */}
+          {/* Return to Landing Page Link */}
           <div style={{ textAlign: "center", marginTop: "2rem", fontSize: "0.875rem", color: "var(--text-muted)" }}>
-            Don't have an enterprise account?{" "}
+            Administrator access only. Return to{" "}
             <span 
-              onClick={() => setCurrentView("signup")} 
+              onClick={() => setCurrentView("home")} 
               style={{ color: "var(--accent-primary)", fontWeight: "800", cursor: "pointer", textDecoration: "underline" }}
             >
-              Start 14-Day Free Trial
+              Landing Page
             </span>
           </div>
 
