@@ -1,8 +1,8 @@
 import React from "react";
 import { useApp } from "../../context/AppContext";
-import { ArrowRight, ShieldCheck, ChevronDown, Code, Zap, Layers } from "lucide-react";
-import navLogoImg from "../../assets/nav-logo.png";
-import wenmarWordmarkImg from "../../assets/wenmar-creates-wordmark.png";
+import { ArrowRight, ShieldCheck, ChevronDown, Code, Zap, Layers, Mail } from "lucide-react";
+import navLogoImg from "../../assets/glossy-red-and-gold-monogram-emblem.png";
+import wenmarMetallicLogoImg from "../../assets/wenmar-creates-maroon-metallic-logo.png";
 
 export const Header = ({ isFloating = false, isGlass = false, isScrolled: propIsScrolled, style = {} }) => {
   const { currentView, setCurrentView } = useApp();
@@ -53,6 +53,20 @@ export const Header = ({ isFloating = false, isGlass = false, isScrolled: propIs
 
   const handleNavClick = (key) => {
     setIsPortfolioOpen(false);
+    if (key === "contact") {
+      const scrollCTA = () => {
+        const el = document.getElementById("cta-section");
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+        else window.location.href = "mailto:wenmarcreates@gmail.com";
+      };
+      if (currentView !== "home") {
+        setCurrentView("home");
+        setTimeout(scrollCTA, 150);
+      } else {
+        scrollCTA();
+      }
+      return;
+    }
     if (key === currentView && key === "home") {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
@@ -128,13 +142,15 @@ export const Header = ({ isFloating = false, isGlass = false, isScrolled: propIs
         {/* Left: Brand Emblem Logo & Wordmark */}
         <div 
           onClick={() => handleNavClick("home")} 
+          className="brand-nav-link"
           style={{ display: "flex", alignItems: "center", gap: "0.85rem", cursor: "pointer", justifySelf: "start" }}
         >
           <img 
             src={navLogoImg} 
             alt="Wenmar Creates Emblem" 
+            decoding="async"
             style={{ 
-              height: "48px", 
+              height: "46px", 
               width: "auto", 
               objectFit: "contain",
               transition: "transform var(--transition-fast)",
@@ -142,13 +158,14 @@ export const Header = ({ isFloating = false, isGlass = false, isScrolled: propIs
             }} 
           />
           <img 
-            src={wenmarWordmarkImg} 
+            src={wenmarMetallicLogoImg} 
             alt="Wenmar Creates" 
+            className="brand-nav-wordmark"
+            decoding="async"
             style={{ 
-              height: "29px", 
+              height: "36px", 
               width: "auto", 
-              objectFit: "contain",
-              filter: "drop-shadow(0 2px 8px rgba(87, 51, 37, 0.12))"
+              objectFit: "contain" 
             }} 
           />
         </div>
@@ -303,12 +320,12 @@ export const Header = ({ isFloating = false, isGlass = false, isScrolled: propIs
         {/* Right: Actions */}
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", justifySelf: "end" }}>
           <button
-            onClick={() => handleNavClick("login")}
+            onClick={() => handleNavClick("contact")}
             className="btn-denim"
             style={{ fontSize: "0.88rem", padding: "0.62rem 1.45rem" }}
           >
-            <ShieldCheck size={15} strokeWidth={2.2} />
-            <span>Admin Access</span>
+            <Mail size={15} strokeWidth={2.2} />
+            <span>Contact</span>
           </button>
         </div>
 

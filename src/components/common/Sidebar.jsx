@@ -119,6 +119,7 @@ export const Sidebar = () => {
             <img 
               src={logoImg} 
               alt="Wenmar Creates Logo" 
+              className="brand-luxury-logo-img"
               style={{ 
                 height: "38px", 
                 width: "auto", 
@@ -131,6 +132,7 @@ export const Sidebar = () => {
           <img 
             src={logoImg} 
             alt="Wenmar Creates Logo" 
+            className="brand-luxury-logo-img"
             style={{ 
               height: "32px", 
               width: "auto", 

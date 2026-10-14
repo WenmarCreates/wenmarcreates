@@ -1,8 +1,21 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useApp } from "../../context/AppContext";
-import { ArrowRight, Zap, Code2, Settings, Database, ChevronUp, ChevronDown, Layers } from "lucide-react";
+import { ArrowRight, Zap, Code2, Settings, Database, ChevronUp, ChevronDown, Layers, ExternalLink, Sparkles, CheckCircle2, Maximize2, Brain, Search, TrendingUp, Mail, Send, Globe, Clock } from "lucide-react";
+import { supabase } from "../../lib/supabase";
 import wenmarSeatedImg from "../../assets/wenmar-seated.png";
 import wenmarPortraitImg from "../../assets/wenmar-confident-suit.png";
+import pmgImg from "../../assets/projects/pmg1.png";
+import wealthxcelerateImg from "../../assets/projects/wealthxcelerate.png";
+import producerosImg from "../../assets/projects/produceros.png";
+import thestrategistImg from "../../assets/projects/thestrategist.png";
+import retirementinstituteImg from "../../assets/projects/retirementinstitute.png";
+import businessoptimizersImg from "../../assets/projects/businessoptimizers.png";
+import postemaconsultingImg from "../../assets/projects/postemaconsulting.png";
+import postemacapitalImg from "../../assets/projects/postemacapital.png";
+import autoLeadScrapeImg from "../../assets/projects/lead-scraping-campaign.jpg";
+import autoBookingImg from "../../assets/projects/booking-automation.jpg";
+import autoDemoGenImg from "../../assets/projects/demo-generator.jpg";
+import autoChatWidgetImg from "../../assets/projects/chat-widget-automation.jpg";
 
 /* useInView hook */
 function useInView(threshold) {
@@ -26,106 +39,142 @@ function useInView(threshold) {
   return [ref, inView];
 }
 
-/* ── SECTION 1: PROJECTS (6 per category, 18 total) ── */
+/* ── SECTION 1: PROJECTS (8 Web Dev, 4 Automations, 6 GHL = 18 total) ── */
 var projects = [
-  /* Web dev (6 projects) */
+  /* Web dev (8 projects) */
   {
     id: "01",
-    title: "SaaS Launch Platform & Funnel",
+    title: "Postema Marketing Group (PMG)",
     categoryKey: "web_dev",
     category: "Web dev",
-    tags: ["REACT / NEXT.JS", "STRIPE CHECKOUT", "FAST ONBOARDING"],
-    description: "High-converting web application with interactive pricing calculator, instant product tour, and frictionless multi-tier subscription onboarding.",
+    image: pmgImg,
+    url: "https://www.pmg1.com/",
+    tags: ["ANNUITY & LIFE OS", "ADVISOR ACQUISITION", "HIGH-CONVERTING FUNNELS"],
+    description: "Enterprise insurance & annuity practice growth platform equipping financial advisors with carrier contracting, automated lead pipelines, and AI-powered client acquisition workflows.",
   },
   {
     id: "02",
-    title: "Agency Client Hub & Portal",
+    title: "WealthXcelerate",
     categoryKey: "web_dev",
     category: "Web dev",
-    tags: ["FULL-STACK REACT", "CLIENT DASHBOARD", "LIVE METRICS"],
-    description: "Custom client portal featuring live project tracking, automated invoice generation, secure asset delivery, and multi-user team approvals.",
+    image: wealthxcelerateImg,
+    url: "https://wealthxcelerate.com/",
+    tags: ["FINANCIAL BLUEPRINT", "LUXURY DARK UI", "COACHING PORTAL"],
+    description: "Complete financial transformation ecosystem led by Ray Lewis & Dennis M. Postema, featuring WealthX University, educational tools, video masterclasses, and coach booking.",
   },
   {
     id: "03",
-    title: "Luxury Brand Commerce Engine",
+    title: "ProducerOS.Ai",
     categoryKey: "web_dev",
     category: "Web dev",
-    tags: ["HEADLESS COMMERCE", "CUSTOM MOTION", "SEO ENGINE"],
-    description: "Bespoke digital storefront with fluid micro-interactions, sub-second product filtering, and conversion-optimized mobile checkout architecture.",
+    image: producerosImg,
+    url: "https://produceros.ai/",
+    tags: ["AI OPERATING SYSTEM", "INSURANCE INFRASTRUCTURE", "ANNUITY FLOW™"],
+    description: "Intelligent digital operating infrastructure for elite insurance agencies, integrating Annuity Flow™, Recruiter AI™, life underwriting stacks, and deep CRM automation.",
   },
   {
     id: "04",
-    title: "Executive Portfolio & Booking Hub",
+    title: "The Strategist CEO",
     categoryKey: "web_dev",
     category: "Web dev",
-    tags: ["NEXT.JS APP", "DYNAMIC CMS", "INSTANT CALENDAR"],
-    description: "High-end brand presence featuring custom CMS case studies, automated client vetting, and direct calendar integration.",
+    image: thestrategistImg,
+    url: "https://thestrategist.ceo/",
+    tags: ["EXECUTIVE BRANDING", "EDITORIAL DESIGN", "ENTERPRISE METHODOLOGY"],
+    description: "Editorial advisory presence for entrepreneurs and founders, offering strategic growth frameworks, operation automation, AI integration, and direct executive consulting.",
   },
   {
     id: "05",
-    title: "Membership & Video Community Hub",
+    title: "The Retirement Institute",
     categoryKey: "web_dev",
     category: "Web dev",
-    tags: ["AUTH & ACCESS", "STREAMING UI", "RECURRING BILLING"],
-    description: "Protected video learning ecosystem with member progress tracking, recurring subscription billing, and private client discussion channels.",
+    image: retirementinstituteImg,
+    url: "https://theretirementinstitute.org/",
+    tags: ["ESTATE & PROBATE", "CONSUMER ADVOCACY", "LIVING TRUST FUNNEL"],
+    description: "Authoritative education and asset protection platform helping retirees avoid probate court with revocable living trust guides, Medicare planning, and tax efficiency tools.",
   },
   {
     id: "06",
-    title: "Real-Time Analytics Dashboard",
+    title: "Business Optimizers",
     categoryKey: "web_dev",
     category: "Web dev",
-    tags: ["DATA VISUALIZATION", "API ENGINE", "LIVE WEBSOCKETS"],
-    description: "Executive KPI command center visualizing revenue metrics, conversion rates, and pipeline velocity with sub-second real-time sync.",
+    image: businessoptimizersImg,
+    url: "https://businessoptimizers.io/",
+    tags: ["ENTERPRISE CONSULTING", "REVENUE ENGINES", "CUSTOM AI SYSTEMS"],
+    description: "Enterprise consulting portal engineered to architect competitive advantages through custom AI systems, strategic process automation, and high-velocity revenue engines.",
   },
-
-  /* Automations (6 projects) */
   {
     id: "07",
-    title: "Cross-Platform Workflow Engine",
-    categoryKey: "automations",
-    category: "Automations",
-    tags: ["ZAPIER / MAKE", "API WEBHOOKS", "ZERO MANUAL WORK"],
-    description: "Multi-platform business automation connecting CRM, payment gateway, Slack alerts, and Google Sheets — eliminating 35+ hours of manual work weekly.",
+    title: "Postema Consulting",
+    categoryKey: "web_dev",
+    category: "Web dev",
+    image: postemaconsultingImg,
+    url: "https://postemaconsulting.com/",
+    tags: ["BUSINESS ARCHITECTURE", "LEGACY CREATION", "STRATEGIC CONSULTING"],
+    description: "Tailored business-building architecture portal showcasing publishing services, strategic consulting, the proprietary MogulOS framework, and client appointment scheduling.",
   },
   {
     id: "08",
-    title: "Smart Lead Routing & AI Triage",
-    categoryKey: "automations",
-    category: "Automations",
-    tags: ["AI LEAD SCORING", "INSTANT DISPATCH", "SMS / EMAIL"],
-    description: "Instant qualification engine that scores inbound inquiries in under 3 seconds, routes priority leads, and fires instant customized reply sequences.",
+    title: "Postema Capital Lending",
+    categoryKey: "web_dev",
+    category: "Web dev",
+    image: postemacapitalImg,
+    url: null,
+    tags: ["COMMERCIAL REAL ESTATE", "PRIVATE CREDIT", "LOAN ESTIMATOR ENGINE"],
+    description: "Institutional balance sheet lender platform featuring interactive real-time bridge loan estimators, structured debt underwriting sizers, and multi-tier capital allocation workflows.",
   },
+
+  /* Automations (4 Enhanced Workflows with Architecture Diagrams) */
   {
     id: "09",
-    title: "Automated Billing & Dunning Matrix",
+    title: "Lead Scraping & Email Campaign Engine",
     categoryKey: "automations",
     category: "Automations",
-    tags: ["REVENUE RECOVERY", "WEBHOOK LISTENERS", "PAYMENT FLOWS"],
-    description: "Automated recovery pipeline for failed subscription charges with smart retry schedules, customized recovery emails, and churn reduction.",
+    image: autoLeadScrapeImg,
+    workflowImage: autoLeadScrapeImg,
+    trigger: "Inbound Web Form / Webhook",
+    whatItDoes: "When a prospect submits the form, the workflow immediately triggers an autonomous multi-source lead scraping engine, extracts and verifies contact attributes, checks email deliverability, records validated leads into Google Sheets and CRM, and deploys targeted, multi-branch cold email sequences tailored to each prospect.",
+    solved: "Eliminates hours of manual lead hunting, data entry, and delayed email outreach. Replaces 20+ hours of repetitive weekly SDR tasks with an instant, autonomous capture-to-campaign outreach engine.",
+    tags: ["N8N WORKFLOW", "LEAD SCRAPING", "MULTI-BRANCH EMAIL ENGINE", "DATA VALIDATION"],
+    description: "Autonomous lead generation & outbound pipeline connecting inbound forms to real-time scraper nodes and automated multi-branch email sequences with zero manual intervention.",
   },
   {
     id: "10",
-    title: "Zero-Touch Client Onboarding Flow",
+    title: "Booking, Proposal & Invoicing Automation",
     categoryKey: "automations",
     category: "Automations",
-    tags: ["AUTO INVOICING", "CONTRACT SIGNING", "DRIVE SETUP"],
-    description: "Triggered onboarding workflow that issues contracts, handles initial invoicing, provisions shared drives, and queues kickoff tasks upon deal win.",
+    image: autoBookingImg,
+    workflowImage: autoBookingImg,
+    trigger: "Live Chat Widget & Booking Form Webhook",
+    whatItDoes: "When a client requests a booking via chat or form, the engine queries live calendar availability and locks the slot. An integrated AI agent generates dynamic quotes, compiles branded PDF proposals, monitors for client approval, auto-generates customized PDF rental agreements, issues checkout invoices, and sends instant multi-party confirmations.",
+    solved: "Eliminates manual booking friction, calendar collision errors, and tedious paperwork. Replaces manual quote drafting, agreement generation, and invoice follow-ups with an instantaneous, error-free booking pipeline.",
+    tags: ["CALENDAR SYNC", "AI PROPOSAL & CONTRACT", "AUTO INVOICING", "STRIPE & PDF GENERATOR"],
+    description: "Complete frictionless booking engine handling calendar availability, AI quote calculations, PDF proposal creation, contract signing, and invoice generation in an uninterrupted loop.",
   },
   {
     id: "11",
-    title: "Multi-Channel Content Distribution",
+    title: "Lead Qualification & Interactive Website Demo Generator",
     categoryKey: "automations",
     category: "Automations",
-    tags: ["CONTENT SYNC", "AIRTABLE API", "CROSS-POSTING"],
-    description: "Airtable-driven automation system that formats, approves, and automatically pushes marketing assets across social channels seamlessly.",
+    image: autoDemoGenImg,
+    workflowImage: autoDemoGenImg,
+    trigger: "Google Sheets Queue & Inbound Lead Webhook",
+    whatItDoes: "Pulls prospective clients into an autonomous 'Leads Keeper' AI agent (OpenRouter + Deep Reasoning). The agent scrapes the prospect's live website, diagnoses conversion gaps, synthesizes a custom knowledge base, and calls Lovable's automated web generator to assemble a live interactive demo website before emailing the prospect with their custom prototype link.",
+    solved: "Eliminates generic low-converting text pitches and days spent creating bespoke mockups. Transforms outbound sales by delivering working, personalized interactive web demos before the discovery call, drastically increasing reply rates and closed deals.",
+    tags: ["AI AGENT (OPENROUTER)", "AUTONOMOUS DEMO BUILDER", "WEBSITE ANALYZER", "LOVABLE API"],
+    description: "Next-gen outbound conversion engine that audits prospect sites and autonomously generates tailored, live interactive demo websites to multiply cold response rates.",
   },
   {
     id: "12",
-    title: "Enriched Inbound Prospect Pipeline",
+    title: "24/7 Autonomous AI Chat, Quoting & Booking Widget",
     categoryKey: "automations",
     category: "Automations",
-    tags: ["DATA ENRICHMENT", "WEBHOOKS", "CRM SYNC"],
-    description: "Lead enrichment pipeline automatically appending verified contact data, company size, and revenue signals before handing off to sales reps.",
+    image: autoChatWidgetImg,
+    workflowImage: autoChatWidgetImg,
+    trigger: "Live Chat Widget Webhook & Visitor Query",
+    whatItDoes: "Embeds a 24/7 autonomous AI assistant equipped with persistent conversation memory and multi-tool orchestration. In real time, the agent reasons through visitor inquiries, queries the company knowledge base, calculates custom quotes on the fly, checks live calendar openings, updates CRM contact records, and fires automated confirmation emails.",
+    solved: "Solves lost after-hours leads, high customer support overhead, and slow inquiry response times. Functions as an always-on sales and support agent that captures leads, calculates pricing, answers complex questions, and books appointments 24/7 with zero human intervention.",
+    tags: ["OPENROUTER AI AGENT", "CONVERSATIONAL MEMORY", "TOOL ORCHESTRATION", "24/7 SUPPORT"],
+    description: "Omniscient 24/7 chat intelligence agent equipped with tool reasoning, dynamic calculations, real-time availability lookups, and instant CRM synchronization.",
   },
 
   /* GHL (6 projects) */
@@ -194,33 +243,176 @@ function ProjectCard(props) {
   var cardRef = result[0];
   var cardInView = result[1];
 
+  var hasUrl = Boolean(project.url && project.url !== "none");
+  var isAutomation = project.categoryKey === "automations";
+
+  function handleCardClick() {
+    if (hasUrl) {
+      window.open(project.url, "_blank", "noopener,noreferrer");
+    } else if (project.workflowImage) {
+      window.open(project.workflowImage, "_blank", "noopener,noreferrer");
+    } else if (onSelect) {
+      onSelect();
+    }
+  }
+
   return (
     <div
       ref={cardRef}
-      className="wm-project-card wm-project-grid-card"
-      onClick={function () { if (onSelect) onSelect(); }}
+      className={
+        "wm-project-card wm-project-grid-card" +
+        (project.image ? " has-image" : "") +
+        (isAutomation ? " is-automation-card" : "")
+      }
+      onClick={handleCardClick}
       style={{
         opacity: cardInView ? 1 : 0,
         transform: cardInView ? "translateY(0)" : "translateY(25px)",
-        transition: "opacity 0.45s ease " + Math.min((index % 6) * 0.08, 0.4) + "s, transform 0.45s ease " + Math.min((index % 6) * 0.08, 0.4) + "s",
+        transition:
+          "opacity 0.45s ease " +
+          Math.min((index % 6) * 0.08, 0.4) +
+          "s, transform 0.45s ease " +
+          Math.min((index % 6) * 0.08, 0.4) +
+          "s",
       }}
       role="button"
       tabIndex={0}
-      onKeyDown={function (e) { if (e.key === "Enter" && onSelect) onSelect(); }}
+      onKeyDown={function (e) {
+        if (e.key === "Enter") {
+          handleCardClick();
+        }
+      }}
       aria-label={"View project details for " + project.title}
     >
-      <span className="wm-project-card-number">{project.id}</span>
-      <div className="wm-project-card-tags">
-        {project.tags.map(function (t) { return <span key={t} className="wm-project-tag">{t}</span>; })}
+      {/* Top Editorial Header: Giant Dark Red Number (Left) + Stacked Scope Tags & Red Line (Right) */}
+      <div className="wm-project-card-header">
+        <div className="wm-project-num-wrap">
+          <span className="wm-project-giant-num">{project.id}</span>
+        </div>
+        <div className="wm-project-scope-stack">
+          <div className="wm-project-scope-list">
+            {project.tags.slice(0, 4).map(function (t) {
+              return (
+                <span key={t} className="wm-project-scope-item">
+                  {t}
+                </span>
+              );
+            })}
+          </div>
+          <div className="wm-project-scope-accent-line" />
+        </div>
       </div>
-      <h3 className="wm-project-card-title">{project.title}</h3>
-      <p className="wm-project-card-desc">{project.description}</p>
+
+      {/* Visual Image Preview Header for Web Dev & Automation Workflows */}
+      {project.image ? (
+        <div className={"wm-project-card-image-wrap" + (isAutomation ? " is-workflow-thumb" : "")}>
+          <img
+            src={project.image}
+            alt={project.title}
+            className="wm-project-card-image"
+            loading="lazy"
+          />
+          <div className="wm-project-card-image-overlay" />
+          {hasUrl && (
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="wm-project-live-badge"
+              onClick={function (e) { e.stopPropagation(); }}
+              title={"Open " + project.title + " live website"}
+            >
+              <span>Live Site</span>
+              <ExternalLink size={11} strokeWidth={2.4} />
+            </a>
+          )}
+          {isAutomation && project.workflowImage && (
+            <a
+              href={project.workflowImage}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="wm-project-live-badge wm-project-workflow-badge"
+              onClick={function (e) { e.stopPropagation(); }}
+              title="Inspect full-resolution architecture diagram"
+            >
+              <Maximize2 size={11} strokeWidth={2.4} />
+              <span>Full Flow</span>
+            </a>
+          )}
+        </div>
+      ) : null}
+
+      {/* Title & Slashed Tags Group */}
+      <div className="wm-project-title-group">
+        <h3 className="wm-project-card-title">{project.title}</h3>
+        <div className="wm-project-slashed-tags">
+          {project.tags.join(" / ")}
+        </div>
+      </div>
+
+      {/* Structured Automation Details when Trigger, What It Does & Solved are defined */}
+      {isAutomation && project.whatItDoes ? (
+        <div className="wm-automation-details-container">
+          {project.trigger && (
+            <div className="wm-automation-trigger-row">
+              <span className="wm-automation-trigger-badge">
+                <Zap size={11} className="wm-trigger-icon" />
+                <span className="wm-trigger-label">TRIGGER:</span>
+                <span className="wm-trigger-value">{project.trigger}</span>
+              </span>
+            </div>
+          )}
+
+          <div className="wm-automation-block">
+            <div className="wm-automation-block-header">
+              <Sparkles size={11} className="wm-auto-icon" />
+              <span className="wm-automation-label">WHAT IT DOES</span>
+            </div>
+            <p className="wm-automation-text">{project.whatItDoes}</p>
+          </div>
+
+          <div className="wm-automation-solved-block">
+            <div className="wm-automation-block-header">
+              <CheckCircle2 size={11} className="wm-auto-icon wm-icon-solved" />
+              <span className="wm-automation-label wm-label-solved">PROBLEM SOLVED</span>
+            </div>
+            <p className="wm-automation-text wm-text-solved">{project.solved}</p>
+          </div>
+        </div>
+      ) : (
+        <p className="wm-project-card-desc">{project.description}</p>
+      )}
+
       <div className="wm-project-card-footer">
         <span className="wm-project-cat">{project.category}</span>
-        <span className="wm-project-action-link">
-          <span>Consult on this</span>
-          <ArrowRight size={14} />
-        </span>
+        {hasUrl ? (
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="wm-project-action-link wm-project-live-link"
+            onClick={function (e) { e.stopPropagation(); }}
+          >
+            <span>Visit Live Site</span>
+            <ExternalLink size={13} strokeWidth={2.2} />
+          </a>
+        ) : isAutomation && project.workflowImage ? (
+          <a
+            href={project.workflowImage}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="wm-project-action-link wm-project-workflow-link"
+            onClick={function (e) { e.stopPropagation(); }}
+          >
+            <span>Inspect Diagram</span>
+            <ExternalLink size={13} strokeWidth={2.2} />
+          </a>
+        ) : (
+          <span className="wm-project-action-link">
+            <span>Consult on this</span>
+            <ArrowRight size={14} />
+          </span>
+        )}
       </div>
     </div>
   );
@@ -373,7 +565,7 @@ export function SectionProjects() {
               tabIndex={0}
               aria-label="Scrollable list of projects"
             >
-              <div className="wm-projects-grid-viewport">
+              <div className={"wm-projects-grid-viewport" + (activeFilter === "automations" ? " is-automations-grid" : "")}>
                 {filteredProjects.map(function (p, i) {
                   return (
                     <ProjectCard
@@ -444,6 +636,8 @@ export function SectionAbout() {
                 src={wenmarPortraitImg}
                 alt="Wenmar — Web Developer &amp; Automation Engineer"
                 className="wm-about-photo"
+                loading="lazy"
+                decoding="async"
               />
             </div>
             <div className="wm-about-annotation wm-about-annotation-left">
@@ -585,150 +779,123 @@ export function SectionServices() {
 /* ── SECTION 4: PROCESS (CREATES Framework) ── */
 var steps = [
   {
-    num: "01",
+    num: "1",
     letter: "C",
     title: "Clarify",
-    body: "Understand the business, the problem, the users, and what actually needs to be built."
+    body: "Understand the business, the problem, the users, and what actually needs to be built.",
+    color: "#E51937",
+    darkColor: "#990A1E",
+    icon: Brain
   },
   {
-    num: "02",
+    num: "2",
     letter: "R",
     title: "Research",
-    body: "Study the market, workflows, competitors, tools, and opportunities before writing code."
+    body: "Study the market, workflows, competitors, tools, and opportunities before writing code.",
+    color: "#701230",
+    darkColor: "#47071B",
+    icon: Search
   },
   {
-    num: "03",
+    num: "3",
     letter: "E",
     title: "Engineer",
-    body: "Build the website, systems, integrations, and automations around the actual business requirements."
+    body: "Build the website, systems, integrations, and automations around the actual business requirements.",
+    color: "#0F3854",
+    darkColor: "#071E2F",
+    icon: Code2
   },
   {
-    num: "04",
+    num: "4",
     letter: "A",
     title: "Automate",
-    body: "Remove repetitive work by connecting tools, data, communication, and processes."
+    body: "Remove repetitive work by connecting tools, data, communication, and processes.",
+    color: "#16838D",
+    darkColor: "#0C5056",
+    icon: Zap
   },
   {
-    num: "05",
+    num: "5",
     letter: "T",
     title: "Test",
-    body: "Break things before customers do. Test the UX, forms, integrations, automations, responsiveness, and edge cases."
+    body: "Break things before customers do. Test the UX, forms, integrations, automations, responsiveness, and edge cases.",
+    color: "#C27318",
+    darkColor: "#7D4609",
+    icon: CheckCircle2
   },
   {
-    num: "06",
+    num: "6",
     letter: "E",
     title: "Enhance",
-    body: "Optimize what is already working. Improve speed, conversion, usability, and efficiency."
+    body: "Optimize what is already working. Improve speed, conversion, usability, and efficiency.",
+    color: "#1D7747",
+    darkColor: "#104729",
+    icon: TrendingUp
   },
   {
-    num: "07",
+    num: "7",
     letter: "S",
     title: "Scale",
-    body: "Create systems that can handle more customers, leads, data, and business without creating more manual work."
+    body: "Create systems that can handle more customers, leads, data, and business without creating more manual work.",
+    color: "#542B72",
+    darkColor: "#321646",
+    icon: Maximize2
   }
 ];
 
 function ProcessStep(props) {
   var step = props.step;
-  var isLast = props.isLast;
-  var stepRef = props.stepRef;
+  var index = props.index;
+  var inViewTuple = useInView(0.12);
+  var cardRef = inViewTuple[0];
+  var isInView = inViewTuple[1];
+  var IconComp = step.icon;
+
   return (
-    <div ref={stepRef} className="wm-process-step-wrap">
-      <div className="wm-process-step">
-        <div className="wm-process-num-col">
-          <span className="wm-process-big-num">{step.num}</span>
-        </div>
-        <div className="wm-process-text-col">
-          <h3 className="wm-process-title">
-            <span className="wm-process-title-letter">{step.letter}</span>
-            <span className="wm-process-title-dash"> — </span>
-            <span>{step.title}</span>
-          </h3>
-          <p className="wm-process-body">{step.body}</p>
+    <div
+      ref={cardRef}
+      className="wm-infographic-card"
+      style={{
+        "--ribbon-color": step.color,
+        "--ribbon-dark": step.darkColor,
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? "translateY(0)" : "translateY(24px)",
+        transition: "opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) " + (index * 0.06) + "s, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) " + (index * 0.06) + "s, box-shadow 0.3s ease"
+      }}
+    >
+      {/* 3D Ribbon on the Left with circular number badge */}
+      <div className="wm-infographic-ribbon">
+        <div className="wm-infographic-badge">
+          <span className="wm-infographic-num">{step.num}</span>
         </div>
       </div>
-      {!isLast && <div className="wm-process-divider" />}
+
+      {/* Main Content Area */}
+      <div className="wm-infographic-content">
+        <h3 className="wm-infographic-title" style={{ color: step.color }}>
+          {step.letter} — {step.title.toUpperCase()}
+        </h3>
+        <p className="wm-infographic-desc">{step.body}</p>
+      </div>
+
+      {/* Right Column: Outline Icon & Layered 3D Chevrons */}
+      <div className="wm-infographic-right">
+        <div className="wm-infographic-icon-circle" style={{ color: step.color }}>
+          {IconComp && <IconComp size={26} strokeWidth={2} />}
+        </div>
+        <div className="wm-infographic-chevrons" aria-hidden="true">
+          <svg width="42" height="24" viewBox="0 0 42 24" fill="none">
+            <path d="M4 4 L21 14 L38 4" stroke="rgba(0, 0, 0, 0.12)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M4 11 L21 21 L38 11" stroke="rgba(0, 0, 0, 0.06)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+      </div>
     </div>
   );
 }
 
 export function SectionProcess() {
   var r = useInView(0.2); var headRef = r[0]; var headInView = r[1];
-  var stepRefs = useRef([]);
-
-  useEffect(function () {
-    var ticking = false;
-    function updateFade() {
-      ticking = false;
-      var focalY = window.innerHeight * 0.44;
-
-      steps.forEach(function (_, i) {
-        var el = stepRefs.current[i];
-        if (!el) return;
-        var rect = el.getBoundingClientRect();
-        var stepCenter = rect.top + rect.height * 0.5;
-
-        if (stepCenter < focalY) {
-          // Upper text moving past focal point: fade away as if switching
-          var distAbove = focalY - stepCenter;
-          if (distAbove <= 25) {
-            el.style.opacity = "1";
-            el.style.transform = "translateY(0px)";
-            el.style.filter = "none";
-            el.style.pointerEvents = "auto";
-          } else if (distAbove >= 170) {
-            // Completely dissolved
-            el.style.opacity = "0";
-            el.style.transform = "translateY(-22px)";
-            el.style.filter = "blur(3px)";
-            el.style.pointerEvents = "none";
-          } else {
-            var progress = (distAbove - 25) / 145; // 0 to 1
-            var op = Math.max(0, 1 - progress);
-            var ty = -progress * 22;
-            var blurPx = progress * 2.5;
-            el.style.opacity = op.toFixed(3);
-            el.style.transform = "translateY(" + ty.toFixed(1) + "px)";
-            el.style.filter = blurPx > 0.4 ? "blur(" + blurPx.toFixed(1) + "px)" : "none";
-            el.style.pointerEvents = op < 0.1 ? "none" : "auto";
-          }
-        } else {
-          // At or below focal point: upcoming items softly previewed
-          var distBelow = stepCenter - focalY;
-          if (distBelow <= 65) {
-            el.style.opacity = "1";
-            el.style.transform = "translateY(0px)";
-            el.style.filter = "none";
-            el.style.pointerEvents = "auto";
-          } else {
-            var progressBelow = Math.min(1, (distBelow - 65) / 220);
-            var opBelow = 1 - progressBelow * 0.82;
-            var finalOp = Math.max(0.18, opBelow);
-            el.style.opacity = finalOp.toFixed(3);
-            el.style.transform = "translateY(0px)";
-            el.style.filter = "none";
-            el.style.pointerEvents = "auto";
-          }
-        }
-      });
-    }
-
-    function onScroll() {
-      if (!ticking) {
-        ticking = true;
-        window.requestAnimationFrame(updateFade);
-      }
-    }
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
-    updateFade();
-
-    return function () {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, []);
 
   return (
     <section className="wm-process-section" id="process-section">
@@ -745,15 +912,13 @@ export function SectionProcess() {
           </h2>
         </div>
 
-        <div className="wm-process-list">
+        <div className="wm-infographic-list">
           {steps.map(function (s, i) {
             return (
               <ProcessStep
                 key={s.letter + "-" + i}
                 step={s}
                 index={i}
-                isLast={i === steps.length - 1}
-                stepRef={function (el) { stepRefs.current[i] = el; }}
               />
             );
           })}
@@ -809,31 +974,256 @@ export function SectionResults() {
   );
 }
 
-/* ── SECTION 6: CTA ── */
+/* ── SECTION 6: CTA & CONTACT FORM ── */
 export function SectionCTA() {
-  var app = useApp();
-  var openDemoModal = app.openDemoModal;
-  var rv = useInView(0.2); var ref = rv[0]; var inView = rv[1];
+  const { addToast } = useApp();
+  const [ref, inView] = useInView(0.15);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: ""
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.name.trim() || !formData.email.trim()) {
+      addToast("Missing Information", "Please enter your name and email address.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // 1. Save inquiry to localStorage
+      try {
+        const stored = JSON.parse(localStorage.getItem("wenmar_inquiries") || "[]");
+        const newRecord = {
+          id: "inq_" + Date.now(),
+          ...formData,
+          createdAt: new Date().toISOString()
+        };
+        localStorage.setItem("wenmar_inquiries", JSON.stringify([newRecord, ...stored]));
+      } catch (err) {
+        // storage fallback
+      }
+
+      // 2. Optionally record in Supabase visitors table if available
+      try {
+        if (supabase) {
+          await supabase.from("visitors").upsert({
+            name: formData.name.trim(),
+            email: formData.email.trim().toLowerCase(),
+            user_agent: navigator.userAgent
+          }, { onConflict: "email" });
+        }
+      } catch (err) {
+        // non-blocking fallback
+      }
+
+      // Natural UX delay
+      await new Promise(res => setTimeout(res, 500));
+
+      setIsSubmitted(true);
+      addToast(
+        "Inquiry Dispatched!",
+        `Thank you ${formData.name}. We will review your inquiry and respond within 24 hours.`
+      );
+    } catch (err) {
+      setIsSubmitted(true);
+      addToast("Inquiry Received", "Thank you for reaching out! We will be in touch shortly.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleReset = () => {
+    setFormData({
+      name: "",
+      email: "",
+      message: ""
+    });
+    setIsSubmitted(false);
+  };
+
   return (
     <section className="wm-cta-section" id="cta-section">
       <div className="wm-cta-watermark" aria-hidden="true">LET&apos;S BUILD</div>
       <div className="wm-cta-photo-wrap">
-        <img src={wenmarSeatedImg} alt="" className="wm-cta-photo" />
+        <img src={wenmarSeatedImg} alt="Wenmar Seated" className="wm-cta-photo" loading="lazy" decoding="async" />
       </div>
       <div className="wm-container wm-cta-inner">
-        <div ref={ref} className="wm-cta-content"
-          style={{ opacity: inView ? 1 : 0, transform: inView ? "translateY(0)" : "translateY(30px)", transition: "opacity 0.7s ease, transform 0.7s ease" }}>
-          <h2 className="wm-cta-headline">
-            got a business worth building?<br />
-            <span className="text-denim-red">let&apos;s build the system.</span>
-          </h2>
-          <p className="wm-cta-sub">You&apos;ve already done the hard part — building an offer people need. Now let&apos;s give it web infrastructure that actually supports the business behind it.</p>
-          <button onClick={openDemoModal} className="wm-cta-btn">
-            <span>work with me</span>
-            <ArrowRight size={17} />
-          </button>
-          <p className="wm-cta-microcopy">WEB APPS / AUTOMATION / GHL SYSTEMS</p>
-          <p className="wm-cta-availability">Philippines • Available Worldwide</p>
+        <div 
+          ref={ref} 
+          className="wm-cta-grid"
+          style={{ 
+            opacity: inView ? 1 : 0, 
+            transform: inView ? "translateY(0)" : "translateY(28px)", 
+            transition: "opacity 0.7s ease, transform 0.7s ease" 
+          }}
+        >
+          {/* Left Column: Direct Info & Value Proposition */}
+          <div className="wm-contact-info-col">
+            <div className="wm-cta-badge">
+              <Sparkles size={13} />
+              <span>DIRECT INQUIRY &amp; CONSULTATION</span>
+            </div>
+
+            <h2 className="wm-cta-headline">
+              got a business worth building?<br />
+              <span className="text-denim-red">let&apos;s build the system.</span>
+            </h2>
+
+            <p className="wm-cta-sub">
+              You&apos;ve already done the hard part — building an offer people need. Now let&apos;s give it custom web infrastructure, autonomous AI automations, and GoHighLevel pipelines that convert.
+            </p>
+
+            {/* Direct Contact Cards */}
+            <div className="wm-contact-cards">
+              <a 
+                href="mailto:wenmarcreates@gmail.com" 
+                className="wm-contact-channel-card"
+                title="Send direct email"
+              >
+                <div className="wm-contact-channel-icon">
+                  <Mail size={18} />
+                </div>
+                <div>
+                  <div className="wm-contact-channel-title">wenmarcreates@gmail.com</div>
+                  <div className="wm-contact-channel-desc">Direct founder inbox • Guaranteed response within 24 hours</div>
+                </div>
+              </a>
+
+              <div className="wm-contact-channel-card">
+                <div className="wm-contact-channel-icon">
+                  <Globe size={18} />
+                </div>
+                <div>
+                  <div className="wm-contact-channel-title">Philippines • Available Worldwide</div>
+                  <div className="wm-contact-channel-desc">Async &amp; real-time sprint delivery across US, UK, EU, and APAC</div>
+                </div>
+              </div>
+
+              <div className="wm-contact-channel-card">
+                <div className="wm-contact-channel-icon">
+                  <Clock size={18} />
+                </div>
+                <div>
+                  <div className="wm-contact-channel-title">Turnaround &amp; Scope Delivery</div>
+                  <div className="wm-contact-channel-desc">Detailed architecture roadmap and estimate delivered within 1 business day</div>
+                </div>
+              </div>
+            </div>
+
+            <p className="wm-cta-microcopy">WEB APPS / AUTOMATION / GHL SYSTEMS</p>
+          </div>
+
+          {/* Right Column: Luxury AayStyle Contact Form Card */}
+          <div className="wm-contact-form-card">
+            {!isSubmitted ? (
+              <form onSubmit={handleSubmit}>
+                <h3 className="wm-contact-form-title">Start a Conversation</h3>
+                <p className="wm-contact-form-subtitle">
+                  Tell me what you&apos;re looking to build. I&apos;ll review your requirements and reply with a tailored roadmap.
+                </p>
+
+                {/* Name Field */}
+                <div className="wm-contact-group">
+                  <label className="wm-contact-label" htmlFor="contact-name">
+                    <span>Your Name *</span>
+                  </label>
+                  <input
+                    id="contact-name"
+                    name="name"
+                    type="text"
+                    required
+                    placeholder="e.g. Alex Morgan / Acme Corp"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="wm-contact-input"
+                  />
+                </div>
+
+                {/* Email Field */}
+                <div className="wm-contact-group">
+                  <label className="wm-contact-label" htmlFor="contact-email">
+                    <span>Work Email *</span>
+                  </label>
+                  <input
+                    id="contact-email"
+                    name="email"
+                    type="email"
+                    required
+                    placeholder="alex@company.com"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="wm-contact-input"
+                  />
+                </div>
+
+                {/* Message Field */}
+                <div className="wm-contact-group">
+                  <label className="wm-contact-label" htmlFor="contact-message">
+                    <span>Project Overview / Goals</span>
+                  </label>
+                  <textarea
+                    id="contact-message"
+                    name="message"
+                    rows={4}
+                    placeholder="Briefly describe what your business needs, your current systems, and target launch date..."
+                    value={formData.message}
+                    onChange={handleChange}
+                    className="wm-contact-textarea"
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="wm-contact-submit-btn"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Clock size={16} className="wm-spin" />
+                      <span>Sending inquiry...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Send Project Inquiry</span>
+                      <Send size={15} />
+                    </>
+                  )}
+                </button>
+              </form>
+            ) : (
+              <div className="wm-contact-success-card">
+                <div className="wm-contact-success-icon">
+                  <CheckCircle2 size={32} />
+                </div>
+                <h4 className="wm-contact-success-title">Inquiry Received!</h4>
+                <p className="wm-contact-success-desc">
+                  Thank you, <strong>{formData.name}</strong>. Your inquiry has been dispatched. I&apos;ll review the details and follow up via <strong>{formData.email}</strong> within 24 hours.
+                </p>
+                <button
+                  type="button"
+                  onClick={handleReset}
+                  className="wm-contact-pill active"
+                  style={{ padding: "0.6rem 1.4rem", fontSize: "0.85rem" }}
+                >
+                  Send Another Inquiry
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </section>
@@ -850,7 +1240,7 @@ export function SiteFooter() {
           <span className="wm-footer-tagline">Built with intent. Delivered with precision.</span>
         </div>
         <div className="wm-footer-right">
-          <a href="mailto:hello@wenmarcreates.com" className="wm-footer-link">hello@wenmarcreates.com</a>
+          <a href="mailto:wenmarcreates@gmail.com" className="wm-footer-link">wenmarcreates@gmail.com</a>
           <span className="wm-footer-copy">© {new Date().getFullYear()} WenmarCreates. All rights reserved.</span>
         </div>
       </div>

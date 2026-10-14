@@ -1,9 +1,8 @@
 import React, { useRef } from "react";
 import { useApp } from "../../context/AppContext";
-import heroNavLogoImg from "../../assets/glossy-burgundy-monogram.png";
-import wenmarWordmarkImg from "../../assets/wenmar-creates-wordmark.png";
+import heroNavLogoImg from "../../assets/glossy-red-and-gold-monogram-emblem.png";
+import wenmarMetallicLogoImg from "../../assets/wenmar-creates-maroon-metallic-logo.png";
 import wenmarSeatedImg from "../../assets/wenmar-seated.png";
-import glossyDarkRedLogoImg from "../../assets/glossy-dark-red-logo.png";
 import {
   ArrowRight,
   ChevronDown,
@@ -43,6 +42,15 @@ export const HomeView = () => {
 
   const homeContainerRef = useRef(null);
   useScrollSpatial(homeContainerRef);
+
+  const handleContactClick = () => {
+    const ctaSection = document.getElementById("cta-section");
+    if (ctaSection) {
+      ctaSection.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.location.href = "mailto:wenmarcreates@gmail.com";
+    }
+  };
 
   return (
     <div ref={homeContainerRef} style={{ display: "flex", flexDirection: "column", position: "relative" }}>
@@ -106,26 +114,29 @@ export const HomeView = () => {
               {/* Brand Logo & Wordmark */}
               <div 
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                className="brand-nav-link"
                 style={{ display: "flex", alignItems: "center", gap: "0.85rem", cursor: "pointer", flexShrink: 0 }}
               >
                 <img 
                   src={heroNavLogoImg} 
-                  alt="Wenmar Creates Logo" 
+                  alt="Wenmar Creates Emblem" 
+                  decoding="async"
                   style={{ 
-                    height: "46px", 
+                    height: "44px", 
                     width: "auto", 
                     objectFit: "contain", 
                     filter: "drop-shadow(0 4px 12px rgba(87, 51, 37, 0.18))" 
                   }} 
                 />
                 <img 
-                  src={wenmarWordmarkImg} 
+                  src={wenmarMetallicLogoImg} 
                   alt="Wenmar Creates" 
+                  className="brand-nav-wordmark"
+                  decoding="async"
                   style={{ 
-                    height: "28px", 
+                    height: "36px", 
                     width: "auto", 
-                    objectFit: "contain",
-                    filter: "drop-shadow(0 2px 8px rgba(87, 51, 37, 0.16))"
+                    objectFit: "contain" 
                   }} 
                 />
               </div>
@@ -183,18 +194,15 @@ export const HomeView = () => {
               </div>
             </div>
 
-            {/* Right: Admin Login Button with Signature AayStyle Denim Texture */}
+            {/* Right: Contact Button with Signature AayStyle Denim Texture */}
             <div style={{ display: "flex", alignItems: "center", gap: "0.85rem" }}>
               <button 
-                onClick={() => {
-                  setCurrentView("login");
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                }} 
-                className="nav-admin-btn"
-                title="Admin Dashboard Login"
+                onClick={handleContactClick} 
+                className="nav-contact-btn"
+                title="Get in touch"
               >
-                <ShieldCheck size={15} strokeWidth={2.2} />
-                <span>Admin Login</span>
+                <Mail size={15} strokeWidth={2.2} />
+                <span>Contact</span>
               </button>
             </div>
           </div>
@@ -356,31 +364,6 @@ export const HomeView = () => {
                   />
                 </button>
               </div>
-
-              {/* Glossy Dark Red WenmarCreates Signature Emblem (Corner Display) */}
-              <div
-                style={{
-                  marginTop: "clamp(1.75rem, 3.5vh, 2.75rem)",
-                  marginLeft: "50px",
-                  display: "inline-flex",
-                  alignItems: "center"
-                }}
-              >
-                <img
-                  src={glossyDarkRedLogoImg}
-                  alt="WenmarCreates Signature Emblem"
-                  style={{
-                    height: "clamp(75px, 9.5vw, 125px)",
-                    width: "auto",
-                    maxWidth: "min(440px, 75vw)",
-                    objectFit: "contain",
-                    display: "block",
-                    filter: "drop-shadow(0 12px 28px rgba(146, 0, 0, 0.35)) drop-shadow(0 3px 8px rgba(87, 51, 37, 0.2))",
-                    pointerEvents: "auto",
-                    userSelect: "none"
-                  }}
-                />
-              </div>
             </div>
           </div>
 
@@ -399,7 +382,7 @@ export const HomeView = () => {
             }}
           >
             <a
-              href="mailto:hello@wenmarcreates.com"
+              href="mailto:wenmarcreates@gmail.com"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -421,7 +404,7 @@ export const HomeView = () => {
               title="Send an email"
             >
               <Mail size={14} style={{ color: "#920000", flexShrink: 0 }} />
-              <span>hello@wenmarcreates.com</span>
+              <span>wenmarcreates@gmail.com</span>
             </a>
 
             <div
@@ -498,6 +481,8 @@ export const HomeView = () => {
           <img 
             src={wenmarSeatedImg} 
             alt="Wenmar - Creative Developer & Automation Specialist" 
+            fetchPriority="high"
+            decoding="async"
             style={{
               height: "clamp(920px, 115vh, 1320px)",
               maxWidth: "min(1280px, 75vw)",

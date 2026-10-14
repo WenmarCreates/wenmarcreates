@@ -17,6 +17,7 @@ export const Footer = () => {
               <img 
                 src={logoImg} 
                 alt="Wenmar Creates Logo" 
+                className="brand-luxury-logo-img"
                 style={{ 
                   height: "44px", 
                   width: "auto", 

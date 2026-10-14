@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useApp } from "../../context/AppContext";
-import heroNavLogoImg from "../../assets/glossy-burgundy-monogram.png";
+import heroNavLogoImg from "../../assets/glossy-red-and-gold-monogram-emblem.png";
 import portalImg from "../../assets/portal_image.png";
 import { TextRoll } from "../ui/text-roll";
 import { Sparkles, Mail, ArrowRight, AlertCircle } from "lucide-react";

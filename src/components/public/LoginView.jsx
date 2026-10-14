@@ -110,12 +110,12 @@ export const LoginView = () => {
               <img 
                 src={logoImg} 
                 alt="Wenmar Creates Logo" 
+                className="brand-luxury-logo-img"
                 style={{ 
                   height: "56px", 
                   width: "auto", 
                   objectFit: "contain",
-                  borderRadius: "var(--radius-sm)",
-                  filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.3))"
+                  borderRadius: "var(--radius-sm)"
                 }} 
               />
             </div>
