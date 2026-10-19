@@ -322,10 +322,10 @@ export const Header = ({ isFloating = false, isGlass = false, isScrolled: propIs
           <button
             onClick={() => handleNavClick("contact")}
             className="btn-denim"
-            style={{ fontSize: "0.88rem", padding: "0.62rem 1.45rem" }}
+            style={{ fontSize: "0.88rem", padding: "0.62rem 1.45rem", whiteSpace: "nowrap" }}
           >
             <Mail size={15} strokeWidth={2.2} />
-            <span>Contact</span>
+            <span>Start a Conversation</span>
           </button>
         </div>
 

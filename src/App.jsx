@@ -7,8 +7,6 @@ import { Sidebar } from "./components/common/Sidebar";
 import { Topbar } from "./components/common/Topbar";
 import { ToastContainer } from "./components/common/ToastContainer";
 import { SearchModal } from "./components/common/SearchModal";
-import { DemoPreviewModal } from "./components/common/DemoPreviewModal";
-import { EntryGateModal } from "./components/common/EntryGateModal";
 import { CinematicScroll } from "./components/common/CinematicScroll";
 
 // Public Website Views - Eagerly loaded for instant first paint
@@ -120,8 +118,6 @@ const MainContent = () => {
       <CinematicScroll />
       <ToastContainer />
       <SearchModal />
-      <DemoPreviewModal />
-      <EntryGateModal />
 
       {isPublic ? (
         <>

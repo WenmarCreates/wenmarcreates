@@ -35,15 +35,27 @@ export const AppProvider = ({ children }) => {
   // Global Search Modal State
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-  // Global Live App Demo Modal State
+  // Global Contact Section Redirection (Popout cards removed)
+  const scrollToContact = () => {
+    const el = document.getElementById("cta-section");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.location.href = "mailto:wenmarcreates@gmail.com";
+    }
+  };
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
-  const openDemoModal = () => setIsDemoModalOpen(true);
+  const openDemoModal = scrollToContact;
   const closeDemoModal = () => setIsDemoModalOpen(false);
+  const openChatModal = scrollToContact;
+  const closeChatModal = () => setIsDemoModalOpen(false);
+  const isChatModalOpen = false;
+  const openChatWidget = scrollToContact;
+  const closeChatWidget = () => setIsDemoModalOpen(false);
+  const isChatWidgetOpen = false;
 
-  // Visitor Welcome & Loading Entry Gate State
-  const [isEntryGateOpen, setIsEntryGateOpen] = useState(() => {
-    return !sessionStorage.getItem("wenmar_entry_passed");
-  });
+  // Visitor Welcome & Loading Entry Gate State (Disabled)
+  const [isEntryGateOpen, setIsEntryGateOpen] = useState(false);
   const [visitorProfile, setVisitorProfile] = useState(() => {
     try {
       const saved = localStorage.getItem("wenmar_visitor_profile");
@@ -469,6 +481,12 @@ export const AppProvider = ({ children }) => {
         setIsDemoModalOpen,
         openDemoModal,
         closeDemoModal,
+        isChatModalOpen,
+        openChatModal,
+        closeChatModal,
+        isChatWidgetOpen,
+        openChatWidget,
+        closeChatWidget,
         businessProfile,
         updateBusinessProfile,
         leads,

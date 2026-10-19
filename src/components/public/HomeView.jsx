@@ -38,7 +38,7 @@ const LinkedinIcon = ({ size = 17, color = "currentColor" }) => (
 );
 
 export const HomeView = () => {
-  const { setCurrentView, openDemoModal } = useApp();
+  const { setCurrentView } = useApp();
 
   const homeContainerRef = useRef(null);
   useScrollSpatial(homeContainerRef);
@@ -199,10 +199,10 @@ export const HomeView = () => {
               <button 
                 onClick={handleContactClick} 
                 className="nav-contact-btn"
-                title="Get in touch"
+                title="Start a Conversation"
               >
                 <Mail size={15} strokeWidth={2.2} />
-                <span>Contact</span>
+                <span>Start a Conversation</span>
               </button>
             </div>
           </div>
@@ -351,7 +351,7 @@ export const HomeView = () => {
 
                 <button
                   type="button"
-                  onClick={() => openDemoModal()}
+                  onClick={handleContactClick}
                   className="hero-btn-conversation"
                   style={{ color: "#920000" }}
                 >
