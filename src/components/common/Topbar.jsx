@@ -9,7 +9,8 @@ import {
   LogOut,
   CheckCircle2,
   Building2,
-  CreditCard
+  CreditCard,
+  Menu
 } from "lucide-react";
 
 export const Topbar = () => {
@@ -46,7 +47,7 @@ export const Topbar = () => {
 
   return (
     <header
-      className="glass-panel"
+      className="glass-panel app-topbar"
       style={{
         padding: "0.85rem 1.75rem",
         display: "flex",
@@ -59,8 +60,17 @@ export const Topbar = () => {
         zIndex: 80
       }}
     >
+      <button
+        type="button"
+        className="topbar-menu-btn"
+        aria-label="Open navigation menu"
+        onClick={() => window.dispatchEvent(new Event("wm:toggle-sidebar"))}
+      >
+        <Menu size={22} />
+      </button>
+
       {/* Title & Description */}
-      <div>
+      <div className="topbar-title-block">
         <h1 style={{ fontSize: "1.2rem", fontWeight: "800", letterSpacing: "-0.01em" }}>
           {currentInfo.title}
         </h1>
@@ -70,7 +80,7 @@ export const Topbar = () => {
       </div>
 
       {/* Center Search Bar */}
-      <div style={{ flex: 1, maxWidth: "420px", margin: "0 2rem" }}>
+      <div className="topbar-search" style={{ flex: 1, maxWidth: "420px", margin: "0 2rem" }}>
         <button
           onClick={() => setIsSearchOpen(true)}
           style={{
@@ -98,10 +108,11 @@ export const Topbar = () => {
       </div>
 
       {/* Right User Actions */}
-      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+      <div className="topbar-actions" style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
         
         {/* Upgrade Plan Badge */}
         <button
+          className="topbar-plan-btn"
           onClick={() => setCurrentView("billing")}
           style={{
             background: "var(--gradient-glow)",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useApp } from "../../context/AppContext";
 import {
   LayoutDashboard,
@@ -25,6 +25,21 @@ import logoImg from "../../assets/logo.png";
 export const Sidebar = () => {
   const { currentView, setCurrentView, businessProfile, masterLeads, automations, appointments, conversations } = useApp();
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Mobile drawer: toggled from Topbar hamburger, closed on navigation / Escape
+  useEffect(() => {
+    const toggle = () => setMobileOpen((o) => !o);
+    const onKey = (e) => { if (e.key === "Escape") setMobileOpen(false); };
+    window.addEventListener("wm:toggle-sidebar", toggle);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("wm:toggle-sidebar", toggle);
+      window.removeEventListener("keydown", onKey);
+    };
+  }, []);
+
+  useEffect(() => { setMobileOpen(false); }, [currentView]);
 
   const navGroups = [
     {
@@ -85,8 +100,15 @@ export const Sidebar = () => {
   ];
 
   return (
+    <>
+    <div
+      className={`app-sidebar-backdrop${mobileOpen ? " is-open" : ""}`}
+      onClick={() => setMobileOpen(false)}
+      aria-hidden="true"
+    />
     <aside
-      className="glass-panel"
+      className={`glass-panel app-sidebar${mobileOpen ? " is-open" : ""}`}
+      aria-label="Dashboard navigation"
       style={{
         width: collapsed ? "80px" : "270px",
         transition: "width var(--transition-normal)",
@@ -257,5 +279,6 @@ export const Sidebar = () => {
       </div>
 
     </aside>
+    </>
   );
 };

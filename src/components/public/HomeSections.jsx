@@ -601,23 +601,27 @@ export function SectionAbout() {
   var openDemoModal = app.openDemoModal;
   return (
     <section className="wm-about-section" id="about-section">
+      {/* Background panels aligned with marquee: Charcoal (72-100%, z:1), Red (0-62%, z:5) */}
+      <div className="wm-about-black-panel" aria-hidden="true" />
+      <div className="wm-about-red-panel" aria-hidden="true" />
+
       <div className="wm-container">
         <div ref={headRef} className="wm-section-eyebrow"
           style={{ opacity: headInView ? 1 : 0, transform: headInView ? "translateX(0)" : "translateX(-20px)", transition: "opacity 0.5s ease, transform 0.5s ease" }}>
-          <span className="wm-eyebrow-num" style={{ color: "#920000" }}>02</span>
-          <span className="wm-eyebrow-slash" style={{ color: "#920000" }}>/</span>
-          <span className="wm-eyebrow-label" style={{ color: "#573325" }}>BEHIND THE WORK</span>
+          <span className="wm-eyebrow-num wm-about-eyebrow-num">02</span>
+          <span className="wm-eyebrow-slash wm-about-eyebrow-slash">/</span>
+          <span className="wm-eyebrow-label wm-about-eyebrow-label">BEHIND THE WORK</span>
         </div>
         <h2 className="wm-about-headline"
           style={{ opacity: headInView ? 1 : 0, transform: headInView ? "translateY(0)" : "translateY(25px)", transition: "opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s" }}>
-          i don&apos;t just make it look good.<br />
-          <span className="text-denim-red">I make it make money.</span>
+          <span className="wm-about-headline-lead">i don&apos;t just make it look good.</span><br />
+          <span className="wm-about-subhead">I make it make money.</span>
         </h2>
-        <div ref={bodyRef} className="wm-about-body"
-          style={{ opacity: bodyInView ? 1 : 0, transform: bodyInView ? "translateY(0)" : "translateY(30px)", transition: "opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s" }}>
-          <div className="wm-about-text-col">
-            <p className="wm-about-para">I&apos;m <strong style={{ color: "#920000" }}>Wenmar</strong>, a web developer, automation engineer, and GHL specialist helping businesses turn ideas into websites, systems, and automations that actually work.</p>
-            <p className="wm-about-para">I work where <strong style={{ color: "#111111" }}>development, automation, and business strategy</strong> meet.</p>
+        <div ref={bodyRef} className="wm-about-body">
+          <div className="wm-about-text-col"
+            style={{ opacity: bodyInView ? 1 : 0, transform: bodyInView ? "translateY(0)" : "translateY(30px)", transition: "opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s" }}>
+            <p className="wm-about-para">I&apos;m <strong className="wm-about-strong-highlight">Wenmar</strong>, a web developer, automation engineer, and GHL specialist helping businesses turn ideas into websites, systems, and automations that actually work.</p>
+            <p className="wm-about-para">I work where <strong className="wm-about-strong-white">development, automation, and business strategy</strong> meet.</p>
             <p className="wm-about-para">That means I&apos;m not just here to build a website and hand you the keys. I think about the customer journey, the workflow, the follow-up, the automation, and everything happening behind the screen.</p>
             <p className="wm-about-para wm-about-bold">If it can be built better, automated smarter, or made more effective, I&apos;ll find a way.</p>
             <div className="wm-about-stats">
@@ -630,7 +634,8 @@ export function SectionAbout() {
               <span className="wm-about-cta-arrow"><ArrowRight size={15} /></span>
             </button>
           </div>
-          <div className="wm-about-photo-col">
+          <div className="wm-about-photo-col"
+            style={{ opacity: bodyInView ? 1 : 0, transform: bodyInView ? "translateY(0)" : "translateY(30px)", transition: "opacity 0.7s ease 0.35s, transform 0.7s ease 0.35s" }}>
             <div className="wm-about-photo-viewport">
               <img
                 src={wenmarPortraitImg}
@@ -643,14 +648,14 @@ export function SectionAbout() {
             <div className="wm-about-annotation wm-about-annotation-left">
               <span>AUTOMATION<br />ENGINEER</span>
               <svg width="44" height="8" viewBox="0 0 44 8" style={{ flexShrink: 0 }}>
-                <line x1="0" y1="4" x2="38" y2="4" stroke="#111111" strokeWidth="1" />
-                <polygon points="36,1.5 42,4 36,6.5" fill="#111111" />
+                <line x1="0" y1="4" x2="38" y2="4" stroke="currentColor" strokeWidth="1" />
+                <polygon points="36,1.5 42,4 36,6.5" fill="currentColor" />
               </svg>
             </div>
             <div className="wm-about-annotation wm-about-annotation-right">
               <svg width="44" height="8" viewBox="0 0 44 8" style={{ flexShrink: 0 }}>
-                <polygon points="8,1.5 2,4 8,6.5" fill="#111111" />
-                <line x1="6" y1="4" x2="44" y2="4" stroke="#111111" strokeWidth="1" />
+                <polygon points="8,1.5 2,4 8,6.5" fill="currentColor" />
+                <line x1="6" y1="4" x2="44" y2="4" stroke="currentColor" strokeWidth="1" />
               </svg>
               <span>WEB<br />ARCHITECT</span>
             </div>

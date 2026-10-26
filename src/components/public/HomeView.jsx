@@ -63,24 +63,15 @@ export const HomeView = () => {
           background: "transparent", 
           position: "relative", 
           zIndex: 30,
-          borderBottom: "1px solid rgba(211, 163, 115, 0.35)"
+          borderBottom: "none"
         }}
       >
         {/* Right Denim Panel (Exact match with denim texture) */}
         <div className="hero-right-denim-panel" />
-        {/* Subtle Architectural Divider Seam at 65% */}
-        <div 
-          style={{ 
-            position: "absolute", 
-            top: 0, 
-            bottom: 0, 
-            left: "65%", 
-            width: "1px", 
-            background: "rgba(211, 163, 115, 0.35)", 
-            pointerEvents: "none", 
-            zIndex: 3 
-          }} 
-        />
+        {/* (Straight divider seam removed: the denim panel now has a slanted left edge) */}
+
+        {/* Red slant on the left: above the founder image (z 20), below the hero text (z 25+) */}
+        <div className="hero-red-slant" aria-hidden="true" />
 
         {/* Top Hero Navigation Bar (Logo & Button Only - Full-Width Transparent Container) */}
         <div 
@@ -210,20 +201,22 @@ export const HomeView = () => {
 
         {/* Hero Section - Executive Content over 65% Existing Background */}
         <section 
+          className="hero-main-section"
           style={{ 
             width: "100%", 
             maxWidth: "1240px", 
             margin: "0 auto", 
-            minHeight: "clamp(880px, calc(100vh + 160px), 1180px)",
+            minHeight: 0,
             flex: 1,
             display: "flex",
             justifyContent: "space-between",
             alignItems: "flex-start",
-            padding: "1.5rem 1.5rem 3.5rem", 
+            padding: "1.5rem 1.5rem 2rem", 
             position: "relative" 
           }}
         >
           <div 
+            className="hero-main-content"
             style={{ 
               width: "100%", 
               maxWidth: "880px", 
@@ -236,6 +229,7 @@ export const HomeView = () => {
           >
             {/* Highlight Robotic Intro: Hey I'm Wenmar (Layered below the founder image at zIndex: 10) */}
             <h1 
+              className="hero-title"
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -244,18 +238,20 @@ export const HomeView = () => {
                 gap: "0.25rem",
                 margin: "0 0 1.5rem 0",
                 position: "relative",
-                zIndex: 10
+                zIndex: 30
               }}
             >
               <span 
+                className="hero-title-intro"
                 style={{
-                  fontFamily: "'Orbitron', monospace, sans-serif",
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  fontStyle: "normal",
                   fontSize: "clamp(2.2rem, 4.2vw, 3.8rem)",
-                  fontWeight: 800,
+                  fontWeight: 700,
                   color: "#111111",
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  lineHeight: 1.05
+                  letterSpacing: "0.02em",
+                  textTransform: "none",
+                  lineHeight: 1.15
                 }}
               >
                 Hey I'm
@@ -270,7 +266,7 @@ export const HomeView = () => {
                 }}
               >
                 <span 
-                  className="text-denim-red-robotic"
+                  className="text-denim-red-robotic hero-title-big"
                   style={{
                     fontSize: "clamp(6.2rem, 15vw, 13.5rem)",
                     fontWeight: 900,
@@ -282,7 +278,7 @@ export const HomeView = () => {
                   WEN
                 </span>
                 <span 
-                  className="text-denim-red-robotic"
+                  className="text-denim-red-robotic hero-title-big"
                   style={{
                     fontSize: "clamp(6.2rem, 15vw, 13.5rem)",
                     fontWeight: 900,
@@ -308,6 +304,7 @@ export const HomeView = () => {
               }}
             >
               <p
+                className="hero-description"
                 style={{
                   margin: 0,
                   fontSize: "clamp(0.92rem, 1.15vw, 1.05rem)",
@@ -322,6 +319,7 @@ export const HomeView = () => {
 
               {/* Dual Hero CTA Action Buttons */}
               <div
+                className="hero-cta-row"
                 style={{
                   marginTop: "1.85rem",
                   display: "flex",
@@ -364,63 +362,62 @@ export const HomeView = () => {
                   />
                 </button>
               </div>
-            </div>
-          </div>
 
-          {/* Direct Contact & Location Info: Positioned at bottom above hero border line */}
-          <div
-            className="hero-contact-location-row"
-            style={{
-              position: "absolute",
-              bottom: "1.25rem",
-              left: "1.5rem",
-              display: "flex",
-              alignItems: "center",
-              flexWrap: "nowrap",
-              gap: "0.85rem",
-              zIndex: 35
-            }}
-          >
-            <a
-              href="mailto:wenmarcreates@gmail.com"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                color: "#573325",
-                fontSize: "0.85rem",
-                fontWeight: 650,
-                textDecoration: "none",
-                whiteSpace: "nowrap",
-                flexShrink: 0,
-                transition: "opacity 0.2s ease"
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.opacity = "0.75";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.opacity = "1";
-              }}
-              title="Send an email"
-            >
-              <Mail size={14} style={{ color: "#920000", flexShrink: 0 }} />
-              <span>wenmarcreates@gmail.com</span>
-            </a>
+              {/* Direct Contact & Location Info: sits 50px below the CTA buttons */}
+              <div
+                className="hero-contact-location-row"
+                style={{
+                  position: "relative",
+                  marginTop: "50px",
+                  display: "flex",
+                  alignItems: "center",
+                  flexWrap: "nowrap",
+                  gap: "0.85rem",
+                  zIndex: 35
+                }}
+              >
+                <a
+                  href="mailto:wenmarcreates@gmail.com"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    color: "#573325",
+                    fontSize: "0.85rem",
+                    fontWeight: 650,
+                    textDecoration: "none",
+                    whiteSpace: "nowrap",
+                    flexShrink: 0,
+                    transition: "opacity 0.2s ease"
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.opacity = "0.75";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.opacity = "1";
+                  }}
+                  title="Send an email"
+                >
+                  <Mail size={14} style={{ color: "#920000", flexShrink: 0 }} />
+                  <span>wenmarcreates@gmail.com</span>
+                </a>
 
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                color: "#573325",
-                fontSize: "0.85rem",
-                fontWeight: 650,
-                whiteSpace: "nowrap",
-                flexShrink: 0
-              }}
-            >
-              <MapPin size={14} style={{ color: "#920000", flexShrink: 0 }} />
-              <span>Philippines • Available Worldwide</span>
+                <div
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    color: "#573325",
+                    fontSize: "0.85rem",
+                    fontWeight: 650,
+                    whiteSpace: "nowrap",
+                    flexShrink: 0
+                  }}
+                >
+                  <MapPin size={14} style={{ color: "#920000", flexShrink: 0 }} />
+                  <span>Philippines • Available Worldwide</span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -453,7 +450,7 @@ export const HomeView = () => {
             position: "absolute",
             left: "calc(68% + 100px)",
             transform: "translateX(-50%)",
-            bottom: "-60px",
+            top: "0px",
             display: "flex",
             alignItems: "flex-end",
             justifyContent: "center",
@@ -462,20 +459,6 @@ export const HomeView = () => {
             overflow: "visible"
           }}
         >
-          {/* Ambient Warm Backlight */}
-          <div 
-            style={{
-              position: "absolute",
-              bottom: "8%",
-              left: "50%",
-              transform: "translateX(-50%)",
-              width: "740px",
-              height: "960px",
-              background: "radial-gradient(ellipse at center, rgba(146, 0, 0, 0.45) 0%, rgba(146, 0, 0, 0) 70%)",
-              filter: "blur(64px)",
-              pointerEvents: "none"
-            }}
-          />
 
           {/* Seated Founder in Executive Armchair (Scaled Up) */}
           <img 
@@ -509,67 +492,84 @@ export const HomeView = () => {
           overflow: "hidden"
         }}
       >
-        {/* Editorial Brand Quote Above Marquee */}
-        <div 
-          style={{
-            maxWidth: "1240px",
-            margin: "0 auto",
-            padding: "0 1.5rem 1.6rem",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            textAlign: "center"
-          }}
-        >
-          <div
+        {/* Slants continuing seamlessly from hero section */}
+        <div className="marquee-red-slant" aria-hidden="true" />
+        <div className="marquee-black-slant" aria-hidden="true" />
+
+        {/* Foreground Content: Quote and BrandMarquee cards remain fully visible on top */}
+        <div style={{ position: "relative", zIndex: 10, width: "100%" }}>
+          {/* Editorial Brand Quote Above Marquee */}
+          <div 
             style={{
-              display: "inline-flex",
+              maxWidth: "1240px",
+              margin: "0 auto",
+              padding: "0 1.5rem 1.6rem",
+              display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: "0.45rem",
-              flexWrap: "wrap",
-              fontSize: "clamp(1.25rem, 2.6vw, 2.15rem)",
-              lineHeight: 1.25,
-              fontWeight: 800,
-              letterSpacing: "-0.02em"
+              textAlign: "center"
             }}
           >
-            <span style={{ color: "#D3A373", fontSize: "1.35em", lineHeight: 0.8, fontFamily: "Georgia, serif", fontWeight: 700 }}>“</span>
-            <span 
-              className="text-denim-red"
-              style={{ 
-                fontSize: "inherit",
-                fontWeight: 900,
-                letterSpacing: "-0.02em"
+            <div
+              className="hero-tagline"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0.55rem",
+                flexWrap: "wrap",
+                fontSize: "clamp(1.15rem, 2.4vw, 1.95rem)",
+                lineHeight: 1.25,
+                fontWeight: 800,
+                letterSpacing: "-0.01em",
+                background: "rgba(17, 17, 17, 0.82)",
+                backdropFilter: "blur(16px)",
+                WebkitBackdropFilter: "blur(16px)",
+                border: "1px solid rgba(211, 163, 115, 0.5)",
+                borderRadius: "9999px",
+                padding: "0.55rem 1.75rem",
+                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15)"
               }}
             >
-              CREATIONS
-            </span>
-            <span 
-              style={{ 
-                fontSize: "clamp(1rem, 2vw, 1.55rem)",
-                fontWeight: 600, 
-                color: "#24140B",
-                margin: "0 0.2rem"
-              }}
-            >
-              that power your
-            </span>
-            <span 
-              className="text-denim-red"
-              style={{ 
-                fontSize: "inherit",
-                fontWeight: 900,
-                letterSpacing: "-0.02em"
-              }}
-            >
-              OPERATIONS.
-            </span>
-            <span style={{ color: "#D3A373", fontSize: "1.35em", lineHeight: 0.8, fontFamily: "Georgia, serif", fontWeight: 700 }}>”</span>
+              <span style={{ color: "#D3A373", fontSize: "1.35em", lineHeight: 0.8, fontFamily: "Georgia, serif", fontWeight: 700 }}>“</span>
+              <span 
+                style={{ 
+                  color: "#FEFADF",
+                  fontSize: "inherit",
+                  fontWeight: 900,
+                  letterSpacing: "-0.01em",
+                  textShadow: "0 2px 10px rgba(0, 0, 0, 0.4)"
+                }}
+              >
+                CREATIONS
+              </span>
+              <span 
+                style={{ 
+                  fontSize: "clamp(0.95rem, 1.8vw, 1.45rem)",
+                  fontWeight: 600, 
+                  color: "#EEDCAC",
+                  margin: "0 0.2rem"
+                }}
+              >
+                that power your
+              </span>
+              <span 
+                style={{ 
+                  color: "#FEFADF",
+                  fontSize: "inherit",
+                  fontWeight: 900,
+                  letterSpacing: "-0.01em",
+                  textShadow: "0 2px 10px rgba(0, 0, 0, 0.4)"
+                }}
+              >
+                OPERATIONS.
+              </span>
+              <span style={{ color: "#D3A373", fontSize: "1.35em", lineHeight: 0.8, fontFamily: "Georgia, serif", fontWeight: 700 }}>”</span>
+            </div>
           </div>
-        </div>
 
-        <BrandMarquee />
+          <BrandMarquee />
+        </div>
       </section>
 
       {/* Home Page Sections: Projects, About, Services, Process, Results, CTA, Footer */}

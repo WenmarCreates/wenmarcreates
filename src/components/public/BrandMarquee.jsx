@@ -350,19 +350,6 @@ export const BrandMarquee = () => {
   return (
     <section ref={sectionRef} className="brand-marquee-section" aria-label="Tools and Technologies Stack">
       <div className="brand-marquee-inner">
-        {/* Header Statement */}
-        <div className="brand-marquee-header">
-          <h2 className="brand-marquee-title">
-            Built with modern <span className="brand-marquee-highlight">tools</span><br />
-            & intelligent stacks
-          </h2>
-
-          <p className="brand-marquee-subtitle">
-            <span>Dev, AI & Automations</span>
-            <span className="brand-marquee-sparkle" aria-hidden="true">✦</span>
-          </p>
-        </div>
-
         {/* Continuous Infinite Logo Marquee with Scroll-Velocity Inertia Wrapper */}
         <div className="brand-marquee-mask">
           <div 
