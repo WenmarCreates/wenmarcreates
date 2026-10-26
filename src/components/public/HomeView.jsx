@@ -248,7 +248,8 @@ export const HomeView = () => {
                   fontStyle: "normal",
                   fontSize: "clamp(2.2rem, 4.2vw, 3.8rem)",
                   fontWeight: 700,
-                  color: "#111111",
+                  color: "#FEFADF",
+                  textShadow: "0 2px 12px rgba(0, 0, 0, 0.45)",
                   letterSpacing: "0.02em",
                   textTransform: "none",
                   lineHeight: 1.15
@@ -308,7 +309,8 @@ export const HomeView = () => {
                 style={{
                   margin: 0,
                   fontSize: "clamp(0.92rem, 1.15vw, 1.05rem)",
-                  color: "#111111",
+                  color: "#FEFADF",
+                  textShadow: "0 1px 8px rgba(0, 0, 0, 0.4)",
                   lineHeight: 1.65,
                   fontWeight: 500,
                   maxWidth: "520px"
@@ -351,12 +353,12 @@ export const HomeView = () => {
                   type="button"
                   onClick={handleContactClick}
                   className="hero-btn-conversation"
-                  style={{ color: "#920000" }}
+                  title="Start a Conversation"
                 >
                   <RandomLetterSwap
                     className="cursor-pointer font-bold text-base"
                     label="Start a Conversation"
-                    style={{ color: "#920000" }}
+                    style={{ color: "#FEFADF" }}
                     staggerDuration={0.025}
                     transition={{ duration: 0.6, type: "spring" }}
                   />
@@ -378,43 +380,65 @@ export const HomeView = () => {
               >
                 <a
                   href="mailto:wenmarcreates@gmail.com"
+                  className="hero-contact-item hero-email-item"
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
-                    gap: "0.5rem",
-                    color: "#573325",
-                    fontSize: "0.85rem",
-                    fontWeight: 650,
+                    gap: "0.55rem",
+                    color: "#FEFADF",
+                    fontSize: "0.88rem",
+                    fontWeight: 700,
                     textDecoration: "none",
                     whiteSpace: "nowrap",
                     flexShrink: 0,
-                    transition: "opacity 0.2s ease"
+                    padding: "0.45rem 1.05rem",
+                    background: "rgba(17, 17, 17, 0.42)",
+                    border: "1px solid rgba(211, 163, 115, 0.45)",
+                    borderRadius: "9999px",
+                    backdropFilter: "blur(8px)",
+                    WebkitBackdropFilter: "blur(8px)",
+                    boxShadow: "0 4px 14px rgba(0, 0, 0, 0.3)",
+                    transition: "all 0.25s ease"
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.opacity = "0.75";
+                    e.currentTarget.style.color = "#FFFFFF";
+                    e.currentTarget.style.borderColor = "rgba(254, 250, 223, 0.85)";
+                    e.currentTarget.style.background = "rgba(17, 17, 17, 0.65)";
+                    e.currentTarget.style.transform = "translateY(-1px)";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.opacity = "1";
+                    e.currentTarget.style.color = "#FEFADF";
+                    e.currentTarget.style.borderColor = "rgba(211, 163, 115, 0.45)";
+                    e.currentTarget.style.background = "rgba(17, 17, 17, 0.42)";
+                    e.currentTarget.style.transform = "translateY(0)";
                   }}
-                  title="Send an email"
+                  title="Send an email to wenmarcreates@gmail.com"
                 >
-                  <Mail size={14} style={{ color: "#920000", flexShrink: 0 }} />
+                  <Mail size={15} style={{ color: "#D3A373", flexShrink: 0 }} />
                   <span>wenmarcreates@gmail.com</span>
                 </a>
 
                 <div
+                  className="hero-contact-item hero-location-item"
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
-                    gap: "0.5rem",
-                    color: "#573325",
-                    fontSize: "0.85rem",
+                    gap: "0.55rem",
+                    color: "#EEDCAC",
+                    fontSize: "0.88rem",
                     fontWeight: 650,
                     whiteSpace: "nowrap",
-                    flexShrink: 0
+                    flexShrink: 0,
+                    padding: "0.45rem 1.05rem",
+                    background: "rgba(17, 17, 17, 0.3)",
+                    border: "1px solid rgba(211, 163, 115, 0.3)",
+                    borderRadius: "9999px",
+                    backdropFilter: "blur(8px)",
+                    WebkitBackdropFilter: "blur(8px)",
+                    boxShadow: "0 4px 14px rgba(0, 0, 0, 0.25)"
                   }}
                 >
-                  <MapPin size={14} style={{ color: "#920000", flexShrink: 0 }} />
+                  <MapPin size={15} style={{ color: "#D3A373", flexShrink: 0 }} />
                   <span>Philippines • Available Worldwide</span>
                 </div>
               </div>

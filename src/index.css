@@ -1269,9 +1269,10 @@ select {
 }
 
 .hero-btn-conversation {
-  background: transparent;
-  border: none;
-  padding: 0.65rem 0.85rem;
+  background: rgba(17, 17, 17, 0.45);
+  border: 1px solid rgba(211, 163, 115, 0.5);
+  border-radius: var(--radius-full);
+  padding: 0.62rem 1.45rem;
   margin: 0;
   cursor: pointer;
   display: inline-flex;
@@ -1279,22 +1280,29 @@ select {
   justify-content: center;
   text-decoration: none;
   font-family: var(--font-sans);
-  font-size: 0.98rem;
+  font-size: 0.96rem;
   font-weight: 700;
-  color: #920000;
-  transition: color 0.2s ease, transform 0.2s ease;
-  will-change: transform, color;
+  color: #FEFADF;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, color, border-color, box-shadow;
   -webkit-tap-highlight-color: transparent;
 }
 
 .hero-btn-conversation:hover {
-  color: #b81616;
-  transform: translateX(4px);
+  color: #FFFFFF;
+  border-color: #FEFADF;
+  background: rgba(17, 17, 17, 0.7);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 16px rgba(211, 163, 115, 0.35);
+  transform: translateY(-2px);
 }
 
 .hero-btn-conversation:active {
-  transform: translateX(5px) scale(0.96);
-  color: #7a0000;
+  transform: translateY(0px) scale(0.97);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   transition-duration: 0.06s;
 }
 
