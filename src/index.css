@@ -435,7 +435,7 @@ body {
   }
 
   .hero-founder-frame img {
-    height: clamp(375px, calc(112vw - 5px), 535px) !important;
+    height: clamp(365px, calc(112vw - 15px), 525px) !important;
     width: auto !important;
     max-width: none !important;
     -webkit-mask-image: linear-gradient(to bottom, #000 66%, transparent 99%);
