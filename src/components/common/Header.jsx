@@ -1,13 +1,15 @@
 import React from "react";
 import { useApp } from "../../context/AppContext";
 import { ArrowRight, ShieldCheck, ChevronDown, Code, Zap, Layers, Mail } from "lucide-react";
-import navLogoImg from "../../assets/glossy-red-and-gold-monogram-emblem.png";
-import wenmarMetallicLogoImg from "../../assets/wenmar-creates-maroon-metallic-logo.png";
+import brandLogoImg from "../../assets/wenmar-creates-logo.png";
+import { SocialNavLinks } from "./SocialNavIcons";
+import { ExecutiveMenuDrawer, LuxuryHamburgerButton } from "./ExecutiveMenuDrawer";
 
 export const Header = ({ isFloating = false, isGlass = false, isScrolled: propIsScrolled, style = {} }) => {
   const { currentView, setCurrentView } = useApp();
   const [internalScrolled, setInternalScrolled] = React.useState(false);
   const [isPortfolioOpen, setIsPortfolioOpen] = React.useState(false);
+  const [isNavMenuOpen, setIsNavMenuOpen] = React.useState(false);
   const dropdownTimeoutRef = React.useRef(null);
 
   React.useEffect(() => {
@@ -139,35 +141,39 @@ export const Header = ({ isFloating = false, isGlass = false, isScrolled: propIs
         }}
       >
         
-        {/* Left: Brand Emblem Logo & Wordmark */}
-        <div 
-          onClick={() => handleNavClick("home")} 
-          className="brand-nav-link"
-          style={{ display: "flex", alignItems: "center", gap: "0.85rem", cursor: "pointer", justifySelf: "start" }}
-        >
-          <img 
-            src={navLogoImg} 
-            alt="Wenmar Creates Emblem" 
-            decoding="async"
+        {/* Left: Brand Logo & Social Icons */}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.95rem", justifySelf: "start" }}>
+          <div 
+            onClick={() => handleNavClick("home")} 
+            className="brand-nav-link"
+            style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
+          >
+            <img 
+              src={brandLogoImg} 
+              alt="Wenmar Creates" 
+              className="brand-luxury-logo-img brand-nav-logo"
+              decoding="async"
+              style={{ 
+                height: "48px", 
+                width: "auto", 
+                objectFit: "contain",
+                transition: "transform var(--transition-fast)",
+                filter: "drop-shadow(0 3px 10px rgba(87, 51, 37, 0.14))"
+              }} 
+            />
+          </div>
+
+          <div 
+            className="header-social-divider"
             style={{ 
-              height: "46px", 
-              width: "auto", 
-              objectFit: "contain",
-              transition: "transform var(--transition-fast)",
-              filter: "drop-shadow(0 3px 10px rgba(87, 51, 37, 0.14))"
+              width: "1px", 
+              height: "22px", 
+              background: "rgba(211, 163, 115, 0.45)", 
+              flexShrink: 0 
             }} 
           />
-          <img 
-            src={wenmarMetallicLogoImg} 
-            alt="Wenmar Creates" 
-            className="brand-nav-wordmark"
-            decoding="async"
-            style={{ 
-              height: "36px", 
-              width: "auto", 
-              objectFit: "contain" 
-            }} 
-          />
+
+          <SocialNavLinks className="header-social-links" />
         </div>
 
         {/* Center: Complete Navigation Links */}
@@ -317,19 +323,38 @@ export const Header = ({ isFloating = false, isGlass = false, isScrolled: propIs
           })}
         </nav>
 
-        {/* Right: Actions */}
-        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", justifySelf: "end" }}>
-          <button
-            onClick={() => handleNavClick("contact")}
-            className="btn-denim"
-            style={{ fontSize: "0.88rem", padding: "0.62rem 1.45rem", whiteSpace: "nowrap" }}
-          >
-            <Mail size={15} strokeWidth={2.2} />
-            <span>Start a Conversation</span>
-          </button>
+        {/* Right: Luxury Hamburger Menu Button */}
+        <div style={{ display: "flex", alignItems: "center", justifySelf: "end" }}>
+          <LuxuryHamburgerButton
+            isOpen={isNavMenuOpen}
+            onClick={() => setIsNavMenuOpen(true)}
+          />
         </div>
 
       </div>
+
+      {/* Executive Slide-In Navigation Menu Drawer */}
+      <ExecutiveMenuDrawer
+        isOpen={isNavMenuOpen}
+        onClose={() => setIsNavMenuOpen(false)}
+        onNavigate={(sectionId) => {
+          setIsNavMenuOpen(false);
+          const scroll = () => {
+            if (sectionId === "hero") {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            } else {
+              const el = document.getElementById(sectionId);
+              if (el) el.scrollIntoView({ behavior: "smooth" });
+            }
+          };
+          if (currentView !== "home") {
+            setCurrentView("home");
+            setTimeout(scroll, 180);
+          } else {
+            scroll();
+          }
+        }}
+      />
     </header>
   );
 };

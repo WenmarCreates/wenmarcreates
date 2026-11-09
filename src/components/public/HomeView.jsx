@@ -1,10 +1,10 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useApp } from "../../context/AppContext";
-import heroNavLogoImg from "../../assets/glossy-red-and-gold-monogram-emblem.png";
-import wenmarMetallicLogoImg from "../../assets/wenmar-creates-maroon-metallic-logo.png";
+import brandLogoImg from "../../assets/wenmar-creates-logo.png";
 import wenmarSeatedImg from "../../assets/wenmar-seated.png";
 import {
   ArrowRight,
+  ArrowUp,
   ChevronDown,
   ShieldCheck,
   Mail,
@@ -14,34 +14,25 @@ import { RandomLetterSwap } from "../ui/random-letter-swap";
 import { BrandMarquee } from "./BrandMarquee";
 import { HomeSections } from "./HomeSections";
 import { useScrollSpatial } from "../../hooks/useScrollSpatial";
-
-// Custom Social SVG Components for 100% Reliable Rendering
-const FacebookIcon = ({ size = 17, color = "currentColor" }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-  </svg>
-);
-
-const XIcon = ({ size = 16, color = "currentColor" }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M4 4l11.733 16h4.267l-11.733 -16z" />
-    <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
-  </svg>
-);
-
-const LinkedinIcon = ({ size = 17, color = "currentColor" }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-    <rect x="2" y="9" width="4" height="12" />
-    <circle cx="4" cy="4" r="2" />
-  </svg>
-);
+import { SocialNavLinks } from "../common/SocialNavIcons";
+import { ExecutiveMenuDrawer, LuxuryHamburgerButton } from "../common/ExecutiveMenuDrawer";
 
 export const HomeView = () => {
   const { setCurrentView } = useApp();
+  const [isNavMenuOpen, setIsNavMenuOpen] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   const homeContainerRef = useRef(null);
   useScrollSpatial(homeContainerRef);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 380);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleContactClick = () => {
     const ctaSection = document.getElementById("cta-section");
@@ -73,7 +64,7 @@ export const HomeView = () => {
         {/* Red slant on the left: above the founder image (z 20), below the hero text (z 25+) */}
         <div className="hero-red-slant" aria-hidden="true" />
 
-        {/* Top Hero Navigation Bar (Logo & Button Only - Full-Width Transparent Container) */}
+        {/* Top Hero Navigation Bar (Logo, Socials, Contact Pills & Menu Button) */}
         <div 
           style={{ 
             width: "100%", 
@@ -83,6 +74,7 @@ export const HomeView = () => {
           }}
         >
           <div 
+            className="hero-navbar-inner"
             style={{ 
               maxWidth: "1240px", 
               margin: "0 auto", 
@@ -92,48 +84,39 @@ export const HomeView = () => {
               justifyContent: "space-between" 
             }}
           >
-            {/* Left: Brand Emblem Logo, Wordmark & Social Icons (Strictly within the 65% white background) */}
+            {/* Left: Brand Emblem Logo & Social Icons */}
             <div 
+              className="hero-nav-left-group"
               style={{ 
                 display: "flex", 
                 alignItems: "center", 
-                gap: "1.15rem",
-                maxWidth: "62%", /* Strictly contained within the left 65% white/cream background */
+                gap: "0.95rem",
                 flexWrap: "nowrap"
               }}
             >
-              {/* Brand Logo & Wordmark */}
+              {/* Brand Logo */}
               <div 
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 className="brand-nav-link"
-                style={{ display: "flex", alignItems: "center", gap: "0.85rem", cursor: "pointer", flexShrink: 0 }}
+                style={{ display: "flex", alignItems: "center", cursor: "pointer", flexShrink: 0 }}
               >
                 <img 
-                  src={heroNavLogoImg} 
-                  alt="Wenmar Creates Emblem" 
+                  src={brandLogoImg} 
+                  alt="Wenmar Creates" 
+                  className="brand-luxury-logo-img brand-nav-logo"
                   decoding="async"
                   style={{ 
-                    height: "44px", 
+                    height: "48px", 
                     width: "auto", 
                     objectFit: "contain", 
                     filter: "drop-shadow(0 4px 12px rgba(87, 51, 37, 0.18))" 
-                  }} 
-                />
-                <img 
-                  src={wenmarMetallicLogoImg} 
-                  alt="Wenmar Creates" 
-                  className="brand-nav-wordmark"
-                  decoding="async"
-                  style={{ 
-                    height: "36px", 
-                    width: "auto", 
-                    objectFit: "contain" 
                   }} 
                 />
               </div>
 
               {/* Vertical Elegant Hairline Divider */}
               <div 
+                className="hero-nav-social-divider"
                 style={{ 
                   width: "1px", 
                   height: "22px", 
@@ -142,62 +125,133 @@ export const HomeView = () => {
                 }} 
               />
 
-              {/* Social Icons - Contained within White/Cream Background */}
+              {/* Social Icons */}
+              <SocialNavLinks />
+
+              {/* Vertical Elegant Hairline Divider */}
               <div 
-                className="hero-social-links"
+                className="hero-nav-contact-divider"
                 style={{ 
-                  display: "flex", 
-                  alignItems: "center", 
-                  gap: "0.75rem",
-                  flexShrink: 0
+                  width: "1px", 
+                  height: "22px", 
+                  background: "rgba(211, 163, 115, 0.45)", 
+                  flexShrink: 0 
+                }} 
+              />
+            </div>
+
+            {/* Direct Contact & Location Info in Navbar after Social Icons */}
+            <div
+              className="hero-nav-contact-items"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                flexWrap: "nowrap",
+                gap: "0.6rem",
+                marginLeft: "0.95rem",
+                marginRight: "auto"
+              }}
+            >
+              <a
+                href="mailto:wenmarcreates@gmail.com"
+                className="hero-contact-item hero-email-item"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.45rem",
+                  color: "#FEFADF",
+                  fontSize: "0.8rem",
+                  fontWeight: 700,
+                  textDecoration: "none",
+                  whiteSpace: "nowrap",
+                  flexShrink: 0,
+                  padding: "0.38rem 0.9rem",
+                  background: "rgba(17, 17, 17, 0.72)",
+                  border: "1px solid rgba(211, 163, 115, 0.48)",
+                  borderRadius: "9999px",
+                  backdropFilter: "blur(8px)",
+                  WebkitBackdropFilter: "blur(8px)",
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.22)",
+                  transition: "all 0.25s ease"
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = "#FFFFFF";
+                  e.currentTarget.style.borderColor = "rgba(254, 250, 223, 0.85)";
+                  e.currentTarget.style.background = "rgba(17, 17, 17, 0.88)";
+                  e.currentTarget.style.transform = "translateY(-1px)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = "#FEFADF";
+                  e.currentTarget.style.borderColor = "rgba(211, 163, 115, 0.48)";
+                  e.currentTarget.style.background = "rgba(17, 17, 17, 0.72)";
+                  e.currentTarget.style.transform = "translateY(0)";
+                }}
+                title="Send an email to wenmarcreates@gmail.com"
+              >
+                <Mail size={14} style={{ color: "#D3A373", flexShrink: 0 }} />
+                <span>wenmarcreates@gmail.com</span>
+              </a>
+
+              <div
+                className="hero-contact-item hero-location-item"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.45rem",
+                  color: "#EEDCAC",
+                  fontSize: "0.8rem",
+                  fontWeight: 650,
+                  whiteSpace: "nowrap",
+                  flexShrink: 0,
+                  padding: "0.38rem 0.9rem",
+                  background: "rgba(17, 17, 17, 0.65)",
+                  border: "1px solid rgba(211, 163, 115, 0.38)",
+                  borderRadius: "9999px",
+                  backdropFilter: "blur(8px)",
+                  WebkitBackdropFilter: "blur(8px)",
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.18)"
                 }}
               >
-                <a 
-                  href="https://linkedin.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="hero-social-btn"
-                  aria-label="LinkedIn"
-                  title="LinkedIn"
-                >
-                  <LinkedinIcon size={18} />
-                </a>
-                <a 
-                  href="https://x.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="hero-social-btn"
-                  aria-label="X (Twitter)"
-                  title="X (Twitter)"
-                >
-                  <XIcon size={17} />
-                </a>
-                <a 
-                  href="https://facebook.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="hero-social-btn"
-                  aria-label="Facebook"
-                  title="Facebook"
-                >
-                  <FacebookIcon size={18} />
-                </a>
+                <MapPin size={14} style={{ color: "#D3A373", flexShrink: 0 }} />
+                <span>Philippines • Available Worldwide</span>
               </div>
             </div>
 
-            {/* Right: Contact Button with Signature AayStyle Denim Texture */}
-            <div style={{ display: "flex", alignItems: "center", gap: "0.85rem" }}>
-              <button 
-                onClick={handleContactClick} 
-                className="nav-contact-btn"
-                title="Start a Conversation"
-              >
-                <Mail size={15} strokeWidth={2.2} />
-                <span>Start a Conversation</span>
-              </button>
-            </div>
+            {/* Right: Spacer to preserve navbar alignment for Sticky Hamburger Button */}
+            <div
+              className="hero-navbar-right"
+              aria-hidden="true"
+              style={{ width: "112px", height: "40px", flexShrink: 0, pointerEvents: "none" }}
+            />
           </div>
         </div>
+
+        {/* Sticky / Fixed High-End Luxury Hamburger Menu Button */}
+        <div
+          className="hero-sticky-hamburger"
+          style={{
+            position: "fixed",
+            top: "0.85rem",
+            right: "max(1.5rem, calc((100vw - 1240px) / 2 + 1.5rem))",
+            zIndex: 98,
+            display: "flex",
+            alignItems: "center",
+            opacity: isNavMenuOpen ? 0 : 1,
+            pointerEvents: isNavMenuOpen ? "none" : "auto",
+            transition: "opacity 0.22s ease"
+          }}
+        >
+          <LuxuryHamburgerButton
+            isOpen={isNavMenuOpen}
+            onClick={() => setIsNavMenuOpen(true)}
+          />
+        </div>
+
+        {/* Executive Slide-In Navigation Menu Drawer */}
+        <ExecutiveMenuDrawer
+          isOpen={isNavMenuOpen}
+          onClose={() => setIsNavMenuOpen(false)}
+        />
 
         {/* Hero Section - Executive Content over 65% Existing Background */}
         <section 
@@ -286,7 +340,7 @@ export const HomeView = () => {
                     letterSpacing: "0.03em",
                     textTransform: "uppercase",
                     lineHeight: 0.85,
-                    marginLeft: "0"
+                    marginLeft: "150px"
                   }}
                 >
                   MAR
@@ -364,84 +418,6 @@ export const HomeView = () => {
                   />
                 </button>
               </div>
-
-              {/* Direct Contact & Location Info: sits 50px below the CTA buttons */}
-              <div
-                className="hero-contact-location-row"
-                style={{
-                  position: "relative",
-                  marginTop: "50px",
-                  display: "flex",
-                  alignItems: "center",
-                  flexWrap: "nowrap",
-                  gap: "0.85rem",
-                  zIndex: 35
-                }}
-              >
-                <a
-                  href="mailto:wenmarcreates@gmail.com"
-                  className="hero-contact-item hero-email-item"
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "0.55rem",
-                    color: "#FEFADF",
-                    fontSize: "0.88rem",
-                    fontWeight: 700,
-                    textDecoration: "none",
-                    whiteSpace: "nowrap",
-                    flexShrink: 0,
-                    padding: "0.45rem 1.05rem",
-                    background: "rgba(17, 17, 17, 0.42)",
-                    border: "1px solid rgba(211, 163, 115, 0.45)",
-                    borderRadius: "9999px",
-                    backdropFilter: "blur(8px)",
-                    WebkitBackdropFilter: "blur(8px)",
-                    boxShadow: "0 4px 14px rgba(0, 0, 0, 0.3)",
-                    transition: "all 0.25s ease"
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = "#FFFFFF";
-                    e.currentTarget.style.borderColor = "rgba(254, 250, 223, 0.85)";
-                    e.currentTarget.style.background = "rgba(17, 17, 17, 0.65)";
-                    e.currentTarget.style.transform = "translateY(-1px)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = "#FEFADF";
-                    e.currentTarget.style.borderColor = "rgba(211, 163, 115, 0.45)";
-                    e.currentTarget.style.background = "rgba(17, 17, 17, 0.42)";
-                    e.currentTarget.style.transform = "translateY(0)";
-                  }}
-                  title="Send an email to wenmarcreates@gmail.com"
-                >
-                  <Mail size={15} style={{ color: "#D3A373", flexShrink: 0 }} />
-                  <span>wenmarcreates@gmail.com</span>
-                </a>
-
-                <div
-                  className="hero-contact-item hero-location-item"
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "0.55rem",
-                    color: "#EEDCAC",
-                    fontSize: "0.88rem",
-                    fontWeight: 650,
-                    whiteSpace: "nowrap",
-                    flexShrink: 0,
-                    padding: "0.45rem 1.05rem",
-                    background: "rgba(17, 17, 17, 0.3)",
-                    border: "1px solid rgba(211, 163, 115, 0.3)",
-                    borderRadius: "9999px",
-                    backdropFilter: "blur(8px)",
-                    WebkitBackdropFilter: "blur(8px)",
-                    boxShadow: "0 4px 14px rgba(0, 0, 0, 0.25)"
-                  }}
-                >
-                  <MapPin size={15} style={{ color: "#D3A373", flexShrink: 0 }} />
-                  <span>Philippines • Available Worldwide</span>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -473,7 +449,7 @@ export const HomeView = () => {
           style={{
             position: "absolute",
             left: "calc(68% + 100px)",
-            transform: "translateX(-50%)",
+            transform: "translateX(-50%) translateY(150px)",
             top: "0px",
             display: "flex",
             alignItems: "flex-end",
@@ -491,8 +467,8 @@ export const HomeView = () => {
             fetchPriority="high"
             decoding="async"
             style={{
-              height: "clamp(920px, 115vh, 1320px)",
-              maxWidth: "min(1280px, 75vw)",
+              height: "clamp(915px, calc(115vh - 5px), 1315px)",
+              maxWidth: "min(1275px, calc(75vw - 5px))",
               width: "auto",
               objectFit: "contain",
               filter: "drop-shadow(0 30px 60px rgba(0, 0, 0, 0.7)) drop-shadow(0 10px 24px rgba(0, 0, 0, 0.5))",
@@ -598,6 +574,49 @@ export const HomeView = () => {
 
       {/* Home Page Sections: Projects, About, Services, Process, Results, CTA, Footer */}
       <HomeSections />
+
+      {/* Floating Back to Top Button */}
+      <button
+        type="button"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        aria-label="Back to top"
+        title="Back to top"
+        style={{
+          position: "fixed",
+          right: "clamp(1.1rem, 2.5vw, 2rem)",
+          bottom: "clamp(1.1rem, 2.5vw, 2rem)",
+          zIndex: 95,
+          width: "48px",
+          height: "48px",
+          borderRadius: "9999px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "linear-gradient(145deg, #1E1815 0%, #111111 100%)",
+          color: "#FEFADF",
+          border: "1.5px solid rgba(211, 163, 115, 0.65)",
+          boxShadow: "0 10px 26px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(254, 250, 223, 0.08) inset",
+          cursor: "pointer",
+          opacity: showBackToTop ? 1 : 0,
+          pointerEvents: showBackToTop ? "auto" : "none",
+          transform: showBackToTop ? "translateY(0) scale(1)" : "translateY(14px) scale(0.9)",
+          transition: "opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease"
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.background = "linear-gradient(145deg, #920000 0%, #680000 100%)";
+          e.currentTarget.style.borderColor = "#FEFADF";
+          e.currentTarget.style.transform = "translateY(-4px) scale(1.05)";
+          e.currentTarget.style.boxShadow = "0 14px 30px rgba(146, 0, 0, 0.48), 0 0 14px rgba(211, 163, 115, 0.35)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.background = "linear-gradient(145deg, #1E1815 0%, #111111 100%)";
+          e.currentTarget.style.borderColor = "rgba(211, 163, 115, 0.65)";
+          e.currentTarget.style.transform = showBackToTop ? "translateY(0) scale(1)" : "translateY(14px) scale(0.9)";
+          e.currentTarget.style.boxShadow = "0 10px 26px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(254, 250, 223, 0.08) inset";
+        }}
+      >
+        <ArrowUp size={20} strokeWidth={2.4} />
+      </button>
 
     </div>
   );

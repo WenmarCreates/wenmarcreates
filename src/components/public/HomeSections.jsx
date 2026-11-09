@@ -16,6 +16,9 @@ import autoLeadScrapeImg from "../../assets/projects/lead-scraping-campaign.jpg"
 import autoBookingImg from "../../assets/projects/booking-automation.jpg";
 import autoDemoGenImg from "../../assets/projects/demo-generator.jpg";
 import autoChatWidgetImg from "../../assets/projects/chat-widget-automation.jpg";
+import GlassFolder from "./GlassFolder";
+import DishOrbitCarousel from "./DishOrbitCarousel";
+import StringTieFooter from "./StringTieFooter";
 
 /* useInView hook */
 function useInView(threshold) {
@@ -605,21 +608,21 @@ export function SectionAbout() {
       <div className="wm-about-black-panel" aria-hidden="true" />
       <div className="wm-about-red-panel" aria-hidden="true" />
 
-      <div className="wm-container">
-        <div ref={headRef} className="wm-section-eyebrow"
-          style={{ opacity: headInView ? 1 : 0, transform: headInView ? "translateX(0)" : "translateX(-20px)", transition: "opacity 0.5s ease, transform 0.5s ease" }}>
-          <span className="wm-eyebrow-num wm-about-eyebrow-num">02</span>
-          <span className="wm-eyebrow-slash wm-about-eyebrow-slash">/</span>
-          <span className="wm-eyebrow-label wm-about-eyebrow-label">BEHIND THE WORK</span>
-        </div>
-        <h2 className="wm-about-headline"
-          style={{ opacity: headInView ? 1 : 0, transform: headInView ? "translateY(0)" : "translateY(25px)", transition: "opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s" }}>
-          <span className="wm-about-headline-lead">i don&apos;t just make it look good.</span><br />
-          <span className="wm-about-subhead">I make it make money.</span>
-        </h2>
+      <div className="wm-container" style={{ position: "relative" }}>
         <div ref={bodyRef} className="wm-about-body">
           <div className="wm-about-text-col"
             style={{ opacity: bodyInView ? 1 : 0, transform: bodyInView ? "translateY(0)" : "translateY(30px)", transition: "opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s" }}>
+            <div ref={headRef} className="wm-section-eyebrow"
+              style={{ opacity: headInView ? 1 : 0, transform: headInView ? "translateX(0)" : "translateX(-20px)", transition: "opacity 0.5s ease, transform 0.5s ease" }}>
+              <span className="wm-eyebrow-num wm-about-eyebrow-num">02</span>
+              <span className="wm-eyebrow-slash wm-about-eyebrow-slash">/</span>
+              <span className="wm-eyebrow-label wm-about-eyebrow-label">BEHIND THE WORK</span>
+            </div>
+            <h2 className="wm-about-headline"
+              style={{ opacity: headInView ? 1 : 0, transform: headInView ? "translateY(0)" : "translateY(25px)", transition: "opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s" }}>
+              <span className="wm-about-headline-lead">i don&apos;t just make it look good.</span><br />
+              <span className="wm-about-subhead">I make it make money.</span>
+            </h2>
             <p className="wm-about-para">I&apos;m <strong className="wm-about-strong-highlight">Wenmar</strong>, a web developer, automation engineer, and GHL specialist helping businesses turn ideas into websites, systems, and automations that actually work.</p>
             <p className="wm-about-para">I work where <strong className="wm-about-strong-white">development, automation, and business strategy</strong> meet.</p>
             <p className="wm-about-para">That means I&apos;m not just here to build a website and hand you the keys. I think about the customer journey, the workflow, the follow-up, the automation, and everything happening behind the screen.</p>
@@ -666,91 +669,194 @@ export function SectionAbout() {
   );
 }
 
-/* ── SECTION 3: SERVICES ── */
+/* ── SECTION 3: SERVICES (Glass Folder Cards) ── */
 var services = [
   {
     id: "A",
-    title: "web app development",
+    num: "01",
+    title: "Web App Development",
     subtitle: "When you need something built from scratch.",
     body: "Custom React applications, dashboards, client portals, internal tools, and full-stack web systems built to perform at scale.",
     tag: "DESIGN / BUILD / DEPLOY",
     Icon: Code2,
     accent: "#920000",
-    accentText: "#920000",
-    accentBorder: "rgba(146, 0, 0, 0.4)"
+    accentText: "#FEFADF",
+    accentBorder: "rgba(211, 163, 115, 0.45)",
+    tone: "light",
+    seed: 3,
+    art: {
+      style: "marble",
+      colors: ["#07090c", "#1f1110", "#571612", "#920000", "#c84b31", "#d3a373", "#fefadf"],
+      scale: 0.65,
+      warp: 3.3,
+      angle: -0.5,
+      gloss: 0.55,
+      veins: 0.55,
+    },
+    files: [
+      { name: "Postema Marketing OS", meta: "React · Live", image: pmgImg, href: "#work-section" },
+      { name: "WealthXcelerate Portal", meta: "Full-Stack UI", image: wealthxcelerateImg, href: "#work-section" },
+      { name: "ProducerOS.Ai Platform", meta: "AI SaaS", art: "ember", href: "#work-section" },
+      { name: "Architecture_Spec.pdf", meta: "React 19 · Next.js", href: "#work-section" },
+    ],
+    extraFiles: [
+      { name: "The Strategist CEO", meta: "Editorial Web", image: thestrategistImg, href: "#work-section" },
+      { name: "Business Optimizers", meta: "Enterprise AI", image: businessoptimizersImg, href: "#work-section" },
+      { name: "Postema Capital", meta: "Loan Sizer OS", image: postemacapitalImg, href: "#work-section" },
+    ],
   },
   {
     id: "B",
-    title: "business automation",
+    num: "02",
+    title: "Business Automation",
     subtitle: "Stop doing manually what a system can handle.",
-    body: "Connecting your CRM, email, payments, and ops tools with smart automations that run while you sleep using Make, Zapier, and custom scripts.",
+    body: "Connecting your CRM, email, payments, and ops tools with smart automations that run while you sleep using n8n, Make, Zapier, and custom scripts.",
     tag: "STRATEGY / WORKFLOW / INTEGRATE",
     Icon: Zap,
     accent: "#D3A373",
-    accentText: "#9E6932",
-    accentBorder: "rgba(158, 105, 50, 0.4)"
+    accentText: "#D3A373",
+    accentBorder: "rgba(211, 163, 115, 0.5)",
+    tone: "light",
+    seed: 7,
+    art: "verdant",
+    files: [
+      { name: "Lead Scraping Engine", meta: "n8n · Autonomous", image: autoLeadScrapeImg, href: "#work-section" },
+      { name: "Booking & Invoicing AI", meta: "Stripe · PDF", image: autoBookingImg, href: "#work-section" },
+      { name: "24/7 AI Chat Widget", meta: "OpenRouter · CRM", art: "verdant", href: "#work-section" },
+      { name: "Workflow_Matrix.json", meta: "n8n · Make · API", href: "#work-section" },
+    ],
+    extraFiles: [
+      { name: "Demo Builder Agent", meta: "Lovable · AI", image: autoDemoGenImg, href: "#work-section" },
+      { name: "Omnichannel Router", meta: "Webhook · Sync", art: "aurora", href: "#work-section" },
+    ],
   },
   {
     id: "C",
-    title: "GHL CRM systems",
+    num: "03",
+    title: "GHL CRM Systems",
     subtitle: "GoHighLevel is powerful. Let's unlock all of it.",
     body: "Full GHL buildouts — pipelines, automations, sub-accounts, white-label setup, membership portals, and conversion-optimised funnels built inside GHL.",
     tag: "CRM / FUNNELS / AUTOMATIONS",
     Icon: Settings,
     accent: "#C85A32",
-    accentText: "#B04820",
-    accentBorder: "rgba(176, 72, 32, 0.4)"
-  }
+    accentText: "#EEDCAC",
+    accentBorder: "rgba(211, 163, 115, 0.45)",
+    tone: "light",
+    seed: 11,
+    art: "dusk",
+    files: [
+      { name: "Agency Snapshot v4", meta: "GHL · Multi-Sub", art: "dusk", href: "#work-section" },
+      { name: "Omnichannel Nurture", meta: "2-Way SMS · Email", art: "aurora", href: "#work-section" },
+      { name: "5-Star Review Engine", meta: "Reputation AI", art: "ember", href: "#work-section" },
+      { name: "Pipeline_Blueprint.pdf", meta: "Funnels · Booking", href: "#work-section" },
+    ],
+    extraFiles: [
+      { name: "Database Reactivation", meta: "Conversation AI", art: "verdant", href: "#work-section" },
+      { name: "Franchise Snapshot", meta: "Multi-Location", art: "glacier", href: "#work-section" },
+    ],
+  },
 ];
 
 function ServiceCard(props) {
   var service = props.service;
   var index = props.index;
+  var isActive = props.isActive;
+  var hasAnyActive = props.hasAnyActive;
+  var onToggle = props.onToggle;
+  var onClose = props.onClose;
   var r = useInView(0.12); var ref = r[0]; var inView = r[1];
+  var extraIdxRef = useRef(0);
+
+  function handleAddFile(currentFiles) {
+    var extras = service.extraFiles || [];
+    if (extras.length > 0) {
+      var pick = extras[extraIdxRef.current % extras.length];
+      extraIdxRef.current += 1;
+      return {
+        name: pick.name,
+        meta: pick.meta,
+        image: pick.image,
+        art: pick.art,
+        href: pick.href,
+      };
+    }
+    return {
+      name: "System_Module_" + (currentFiles.length + 1) + ".ts",
+      meta: "Ready to deploy",
+      art: "aurora",
+      href: "#work-section",
+    };
+  }
+
   return (
     <div
       ref={ref}
-      className="wm-service-card-wrapper"
+      className={
+        "wm-service-folder-item" +
+        (isActive ? " is-active" : "") +
+        (hasAnyActive && !isActive ? " is-dimmed" : "")
+      }
       style={{
         opacity: inView ? 1 : 0,
         transform: inView ? "translateY(0)" : "translateY(35px)",
-        transition: "opacity 0.55s ease " + (index * 0.12) + "s, transform 0.55s ease " + (index * 0.12) + "s"
+        transition:
+          "opacity 0.55s ease " +
+          index * 0.12 +
+          "s, transform 0.55s ease " +
+          index * 0.12 +
+          "s, flex 0.55s cubic-bezier(0.22, 1, 0.36, 1)",
       }}
     >
-      {/* Top-Left Solid Geometric Corner Accent */}
-      <div
-        className="wm-service-corner-tl"
-        style={{ backgroundColor: service.accent }}
-        aria-hidden="true"
-      />
-
-      {/* Bottom-Right Wireframe Geometric Corner Accent */}
-      <div
-        className="wm-service-corner-br"
-        style={{ borderColor: service.accent }}
-        aria-hidden="true"
-      />
-
-      {/* Main Central Foreground Card */}
-      <div className="wm-service-card">
-        <div className="wm-service-icon-wrap" style={{ color: service.accent }}>
-          <service.Icon size={46} strokeWidth={1.8} />
-        </div>
-        <h3 className="wm-service-title" style={{ color: service.accentText }}>
-          {service.title}
-        </h3>
-        <p className="wm-service-subtitle">{service.subtitle}</p>
-        <p className="wm-service-body">{service.body}</p>
-        <div className="wm-service-tag-row">
-          <span
-            className="wm-service-tag"
-            style={{
-              color: service.accentText,
-              borderColor: service.accentBorder
+      <div className="wm-service-folder-focus-wrap">
+        {/* Interactive 3D Frosted Glass Folder */}
+        <div className="wm-service-folder-stage">
+          <GlassFolder
+            label={service.title}
+            tone={service.tone}
+            art={service.art}
+            seed={service.seed}
+            files={service.files}
+            action="add"
+            onAdd={handleAddFile}
+            open={isActive}
+            onOpenChange={function (nextOpen) {
+              onToggle(service.id, nextOpen);
             }}
-          >
-            {service.tag}
-          </span>
+            appear={true}
+            appearDelay={index * 140}
+            width={320}
+          />
+        </div>
+
+        {/* Below-Folder Popout Description Panel (Spawns below the focused folder on click) */}
+        <div
+          data-service-popout
+          className={"wm-service-below-popout" + (isActive ? " is-open" : "")}
+          aria-hidden={!isActive}
+        >
+          <div className="wm-service-below-popout-clip">
+            <div className="wm-service-below-popout-inner">
+              <div className="wm-service-popout-glow" aria-hidden="true" />
+              <div className="wm-service-folder-header wm-popout-stagger-1">
+                <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                  <span className="wm-service-folder-num">{service.num}</span>
+                  <span className="wm-service-folder-tag">{service.tag}</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="wm-service-popout-close"
+                  aria-label="Close service details"
+                  tabIndex={isActive ? 0 : -1}
+                >
+                  ×
+                </button>
+              </div>
+              <h3 className="wm-service-folder-title wm-popout-stagger-2">{service.title}</h3>
+              <p className="wm-service-folder-subtitle wm-popout-stagger-3">{service.subtitle}</p>
+              <p className="wm-service-folder-body wm-popout-stagger-4">{service.body}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -759,29 +865,99 @@ function ServiceCard(props) {
 
 export function SectionServices() {
   var r = useInView(0.2); var headRef = r[0]; var headInView = r[1];
+  var activeState = useState(null);
+  var activeId = activeState[0];
+  var setActiveId = activeState[1];
+
+  function handleToggle(id, nextOpen) {
+    if (nextOpen) {
+      setActiveId(id);
+    } else if (activeId === id) {
+      setActiveId(null);
+    }
+  }
+
   return (
     <section className="wm-services-section" id="services-section">
       <div className="wm-container">
-        <div ref={headRef} style={{ opacity: headInView ? 1 : 0, transform: headInView ? "translateY(0)" : "translateY(25px)", transition: "opacity 0.6s ease, transform 0.6s ease" }}>
-          <div className="wm-section-eyebrow wm-eyebrow-light">
-            <span className="wm-eyebrow-num">03</span>
-            <span className="wm-eyebrow-slash">/</span>
-            <span className="wm-eyebrow-label">WHAT I DO</span>
+        <div ref={headRef} className="wm-services-header-row" style={{ opacity: headInView ? 1 : 0, transform: headInView ? "translateY(0)" : "translateY(25px)", transition: "opacity 0.6s ease, transform 0.6s ease" }}>
+          <div>
+            <div className="wm-section-eyebrow wm-eyebrow-light">
+              <span className="wm-eyebrow-num">03</span>
+              <span className="wm-eyebrow-slash">/</span>
+              <span className="wm-eyebrow-label">WHAT I DO</span>
+            </div>
+            <h2 className="wm-services-headline">
+              tools change.<br />
+              <span className="wm-services-headline-accent">outcomes don&apos;t.</span>
+            </h2>
           </div>
-          <h2 className="wm-services-headline">
-            tools change.<br />
-            <span className="wm-services-headline-accent">outcomes don&apos;t.</span>
-          </h2>
+          <p className="wm-services-hint">
+            Click any folder to focus it and reveal its scope &amp; capabilities below.
+          </p>
         </div>
-        <div className="wm-services-grid">
-          {services.map(function (s, i) { return <ServiceCard key={s.id} service={s} index={i} />; })}
+        <div className={"wm-services-row" + (activeId ? " has-active" : "")}>
+          {services.map(function (s, i) {
+            return (
+              <ServiceCard
+                key={s.id}
+                service={s}
+                index={i}
+                isActive={activeId === s.id}
+                hasAnyActive={Boolean(activeId)}
+                onToggle={handleToggle}
+                onClose={function () {
+                  setActiveId(null);
+                }}
+              />
+            );
+          })}
         </div>
       </div>
     </section>
   );
 }
 
-/* ── SECTION 4: PROCESS (CREATES Framework) ── */
+/* ── SECTION 4: PROCESS (CREATES Framework — DishOrbitCarousel) ── */
+function buildProcessMedallion(step) {
+  var svg =
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 260">' +
+    "<defs>" +
+    '<radialGradient id="rim" cx="35%" cy="28%" r="72%">' +
+    '<stop offset="0%" stop-color="#FEFADF"/>' +
+    '<stop offset="42%" stop-color="#D3A373"/>' +
+    '<stop offset="78%" stop-color="#573325"/>' +
+    '<stop offset="100%" stop-color="#1E110B"/>' +
+    "</radialGradient>" +
+    '<radialGradient id="core" cx="36%" cy="30%" r="70%">' +
+    '<stop offset="0%" stop-color="' + step.color + '"/>' +
+    '<stop offset="68%" stop-color="' + step.darkColor + '"/>' +
+    '<stop offset="100%" stop-color="#120907"/>' +
+    "</radialGradient>" +
+    '<linearGradient id="glass" x1="0%" y1="0%" x2="100%" y2="100%">' +
+    '<stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.38"/>' +
+    '<stop offset="45%" stop-color="#FFFFFF" stop-opacity="0.04"/>' +
+    '<stop offset="100%" stop-color="#000000" stop-opacity="0.25"/>' +
+    "</linearGradient>" +
+    "</defs>" +
+    '<circle cx="130" cy="130" r="122" fill="url(#rim)"/>' +
+    '<circle cx="130" cy="130" r="113" fill="#18100C" stroke="#EEDCAC" stroke-opacity="0.35" stroke-width="1.5"/>' +
+    '<circle cx="130" cy="130" r="102" fill="none" stroke="#D3A373" stroke-opacity="0.45" stroke-width="1.5" stroke-dasharray="5 6"/>' +
+    '<circle cx="130" cy="130" r="90" fill="url(#core)" stroke="#FEFADF" stroke-opacity="0.32" stroke-width="2"/>' +
+    '<ellipse cx="110" cy="86" rx="58" ry="30" fill="url(#glass)" transform="rotate(-18 110 86)"/>' +
+    '<text x="130" y="74" text-anchor="middle" fill="#EEDCAC" font-family="system-ui, sans-serif" font-size="11" font-weight="700" letter-spacing="3.5">PHASE 0' +
+    step.num +
+    "</text>" +
+    '<text x="130" y="156" text-anchor="middle" fill="#FEFADF" font-family="Georgia, serif" font-size="88" font-weight="900">' +
+    step.letter +
+    "</text>" +
+    '<text x="130" y="194" text-anchor="middle" fill="#FEFADF" fill-opacity="0.9" font-family="system-ui, sans-serif" font-size="13.5" font-weight="800" letter-spacing="2.5">' +
+    step.title.toUpperCase() +
+    "</text>" +
+    "</svg>";
+  return "data:image/svg+xml;utf8," + encodeURIComponent(svg);
+}
+
 var steps = [
   {
     num: "1",
@@ -790,7 +966,10 @@ var steps = [
     body: "Understand the business, the problem, the users, and what actually needs to be built.",
     color: "#E51937",
     darkColor: "#990A1E",
-    icon: Brain
+    chef: "Discovery & Scope",
+    kitchen: "C.R.E.A.T.E.S Method · Phase 01",
+    likes: 128,
+    deliverables: ["Business Audit", "User Journey", "Technical Scope", "KPI Targets"],
   },
   {
     num: "2",
@@ -799,7 +978,10 @@ var steps = [
     body: "Study the market, workflows, competitors, tools, and opportunities before writing code.",
     color: "#701230",
     darkColor: "#47071B",
-    icon: Search
+    chef: "Market & Workflow Intel",
+    kitchen: "C.R.E.A.T.E.S Method · Phase 02",
+    likes: 114,
+    deliverables: ["Competitor Map", "Stack Audit", "Funnel Blueprint", "Bottleneck Study"],
   },
   {
     num: "3",
@@ -808,7 +990,10 @@ var steps = [
     body: "Build the website, systems, integrations, and automations around the actual business requirements.",
     color: "#0F3854",
     darkColor: "#071E2F",
-    icon: Code2
+    chef: "Full-Stack Architecture",
+    kitchen: "C.R.E.A.T.E.S Method · Phase 03",
+    likes: 162,
+    deliverables: ["Custom React UI", "API & Webhooks", "GHL Architecture", "Database Schema"],
   },
   {
     num: "4",
@@ -817,7 +1002,10 @@ var steps = [
     body: "Remove repetitive work by connecting tools, data, communication, and processes.",
     color: "#16838D",
     darkColor: "#0C5056",
-    icon: Zap
+    chef: "Workflow & AI Pipelines",
+    kitchen: "C.R.E.A.T.E.S Method · Phase 04",
+    likes: 189,
+    deliverables: ["n8n & Make Flows", "AI Receptionist", "2-Way CRM Sync", "Auto Follow-Up"],
   },
   {
     num: "5",
@@ -826,7 +1014,10 @@ var steps = [
     body: "Break things before customers do. Test the UX, forms, integrations, automations, responsiveness, and edge cases.",
     color: "#C27318",
     darkColor: "#7D4609",
-    icon: CheckCircle2
+    chef: "QA & Stress Hardening",
+    kitchen: "C.R.E.A.T.E.S Method · Phase 05",
+    likes: 141,
+    deliverables: ["Cross-Device QA", "Webhook Stress Test", "Form & Lead QA", "Edge-Case Checks"],
   },
   {
     num: "6",
@@ -835,7 +1026,10 @@ var steps = [
     body: "Optimize what is already working. Improve speed, conversion, usability, and efficiency.",
     color: "#1D7747",
     darkColor: "#104729",
-    icon: TrendingUp
+    chef: "Conversion & Speed Tuning",
+    kitchen: "C.R.E.A.T.E.S Method · Phase 06",
+    likes: 153,
+    deliverables: ["CRO Optimization", "Core Web Vitals", "UX Refinement", "Pipeline Tuning"],
   },
   {
     num: "7",
@@ -844,60 +1038,31 @@ var steps = [
     body: "Create systems that can handle more customers, leads, data, and business without creating more manual work.",
     color: "#542B72",
     darkColor: "#321646",
-    icon: Maximize2
-  }
+    chef: "Autonomous Growth Ops",
+    kitchen: "C.R.E.A.T.E.S Method · Phase 07",
+    likes: 197,
+    deliverables: ["Multi-Channel Scale", "Live Analytics", "Zero-Bottleneck Ops", "24/7 Reliability"],
+  },
 ];
 
-function ProcessStep(props) {
-  var step = props.step;
-  var index = props.index;
-  var inViewTuple = useInView(0.12);
-  var cardRef = inViewTuple[0];
-  var isInView = inViewTuple[1];
-  var IconComp = step.icon;
-
-  return (
-    <div
-      ref={cardRef}
-      className="wm-infographic-card"
-      style={{
-        "--ribbon-color": step.color,
-        "--ribbon-dark": step.darkColor,
-        opacity: isInView ? 1 : 0,
-        transform: isInView ? "translateY(0)" : "translateY(24px)",
-        transition: "opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) " + (index * 0.06) + "s, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) " + (index * 0.06) + "s, box-shadow 0.3s ease"
-      }}
-    >
-      {/* 3D Ribbon on the Left with circular number badge */}
-      <div className="wm-infographic-ribbon">
-        <div className="wm-infographic-badge">
-          <span className="wm-infographic-num">{step.num}</span>
-        </div>
-      </div>
-
-      {/* Main Content Area */}
-      <div className="wm-infographic-content">
-        <h3 className="wm-infographic-title" style={{ color: step.color }}>
-          {step.letter} — {step.title.toUpperCase()}
-        </h3>
-        <p className="wm-infographic-desc">{step.body}</p>
-      </div>
-
-      {/* Right Column: Outline Icon & Layered 3D Chevrons */}
-      <div className="wm-infographic-right">
-        <div className="wm-infographic-icon-circle" style={{ color: step.color }}>
-          {IconComp && <IconComp size={26} strokeWidth={2} />}
-        </div>
-        <div className="wm-infographic-chevrons" aria-hidden="true">
-          <svg width="42" height="24" viewBox="0 0 42 24" fill="none">
-            <path d="M4 4 L21 14 L38 4" stroke="rgba(0, 0, 0, 0.12)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M4 11 L21 21 L38 11" stroke="rgba(0, 0, 0, 0.06)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
-      </div>
-    </div>
-  );
-}
+var processDishes = steps.map(function (s, idx) {
+  return {
+    title: s.letter + " — Phase 0" + s.num,
+    subtitle: s.title,
+    image: buildProcessMedallion(s),
+    alt: "Phase 0" + s.num + ": " + s.title,
+    eyebrow: "C.R.E.A.T.E.S METHOD · STEP 0" + s.num + " OF 07",
+    label: "0" + s.num + " · " + s.title,
+    rating: 5.0,
+    badgeText: "0" + s.num,
+    chef: s.chef,
+    kitchen: s.kitchen,
+    description: s.body,
+    likes: s.likes,
+    ingredients: s.deliverables,
+    accent: s.color,
+  };
+});
 
 export function SectionProcess() {
   var r = useInView(0.2); var headRef = r[0]; var headInView = r[1];
@@ -909,26 +1074,23 @@ export function SectionProcess() {
           <div className="wm-section-eyebrow">
             <span className="wm-eyebrow-num" style={{ color: "#920000" }}>04</span>
             <span className="wm-eyebrow-slash" style={{ color: "#920000" }}>/</span>
-            <span className="wm-eyebrow-label" style={{ color: "#573325" }}>HOW I WORK</span>
+            <span className="wm-eyebrow-label" style={{ color: "#573325" }}>HOW I WORK — THE C.R.E.A.T.E.S METHOD</span>
           </div>
           <h2 className="wm-process-section-headline">
             every project follows<br />
-            <span className="text-denim-red">the same logic.</span>
+            <span className="text-denim-red">the C.R.E.A.T.E.S method.</span>
           </h2>
         </div>
-
-        <div className="wm-infographic-list">
-          {steps.map(function (s, i) {
-            return (
-              <ProcessStep
-                key={s.letter + "-" + i}
-                step={s}
-                index={i}
-              />
-            );
-          })}
-        </div>
       </div>
+
+      <DishOrbitCarousel
+        dishes={processDishes}
+        height="88svh"
+        loop={false}
+        playLabel="View deliverables"
+        orderLabel="Start a project"
+        ingredientsTabLabel="Deliverables"
+      />
     </section>
   );
 }
@@ -1238,18 +1400,33 @@ export function SectionCTA() {
 /* ── FOOTER ── */
 export function SiteFooter() {
   return (
-    <footer className="wm-footer">
-      <div className="wm-container wm-footer-inner">
-        <div className="wm-footer-left">
-          <span className="wm-footer-brand">WENMARCREATES</span>
-          <span className="wm-footer-tagline">Built with intent. Delivered with precision.</span>
-        </div>
-        <div className="wm-footer-right">
-          <a href="mailto:wenmarcreates@gmail.com" className="wm-footer-link">wenmarcreates@gmail.com</a>
-          <span className="wm-footer-copy">© {new Date().getFullYear()} WenmarCreates. All rights reserved.</span>
-        </div>
-      </div>
-    </footer>
+    <StringTieFooter
+      meta={[]}
+      title="Thank"
+      titleAccent="You"
+      tapes={["Looking Forward to", "Building with You!"]}
+      email="wenmarcreates@gmail.com"
+      phone="Philippines • Available Worldwide"
+      phoneLabel="Location"
+      links={[
+        { label: "linkedin.com/in/wenmarcreates", href: "https://linkedin.com" },
+        { label: "instagram.com/wenmarcreates", href: "https://instagram.com" },
+        { label: "youtube.com/@wenmarcreates", href: "https://youtube.com" },
+        { label: "facebook.com/wenmarcreates", href: "https://facebook.com" },
+      ]}
+      regards="Warm Regards,"
+      signatureLabel="Signed, Wenmar Creates"
+      note={{
+        kicker: "A note, tucked inside",
+        text: "Got a web app, AI workflow, or GoHighLevel system to build? My inbox is open — I reply within 24 hours.",
+        cta: "Write to me",
+      }}
+      paper="#FEFADF"
+      ink="#111111"
+      bodyInk="#FEFADF"
+      accent="#920000"
+      cord="#D3A373"
+    />
   );
 }
 
