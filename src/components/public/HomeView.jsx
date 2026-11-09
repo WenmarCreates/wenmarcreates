@@ -467,8 +467,8 @@ export const HomeView = () => {
             fetchPriority="high"
             decoding="async"
             style={{
-              height: "clamp(905px, calc(115vh - 15px), 1305px)",
-              maxWidth: "min(1265px, calc(75vw - 15px))",
+              height: "clamp(885px, calc(115vh - 35px), 1285px)",
+              maxWidth: "min(1245px, calc(75vw - 35px))",
               width: "auto",
               objectFit: "contain",
               filter: "drop-shadow(0 30px 60px rgba(0, 0, 0, 0.7)) drop-shadow(0 10px 24px rgba(0, 0, 0, 0.5))",
